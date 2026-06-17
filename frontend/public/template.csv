@@ -1,0 +1,11 @@
+customer_name,email,phone,city,age_group,product_category,product_name,event_type,channel,event_value,timestamp
+Aarav Mehta,aarav@example.com,9876543210,Mumbai,25-34,Running Shoes,Nike Pegasus,product_view,web,0,2026-06-01T10:30:00Z
+Riya Kapoor,riya@example.com,9876543211,Delhi,18-24,Running Shoes,Nike Vaporfly,add_to_cart,app_push,0,2026-06-02T12:00:00Z
+Kabir Sinha,kabir@example.com,9876543212,Bangalore,25-34,Training Gear,Dri-FIT Tee,purchase,email,3499,2026-06-04T15:45:00Z
+Ananya Verma,ananya@example.com,9876543213,Chennai,35-44,Yoga Mat,Manduka Pro,product_view,web,0,2026-06-05T09:15:00Z
+Vikram Reddy,vikram@example.com,9876543214,Hyderabad,25-34,Protein,Gold Standard Whey,purchase,email,2299,2026-06-06T14:30:00Z
+Priya Sharma,priya@example.com,9876543215,Pune,18-24,Sneakers,Air Jordan 1,add_to_cart,web,0,2026-06-07T11:00:00Z
+Rohit Desai,rohit@example.com,9876543216,Ahmedabad,35-44,Cricket Bat,BH Thunder,search,web,0,2026-06-08T16:20:00Z
+Sneha Patel,sneha@example.com,9876543217,Surat,25-34,Fragrance,Sauvage,email_click,email,0,2026-06-09T08:45:00Z
+Arjun Nair,arjun@example.com,9876543218,Kochi,18-24,Running Shoes,Nike Revolution,purchase,app_push,4999,2026-06-10T19:00:00Z
+Meera Iyer,meera@example.com,9876543219,Bangalore,25-34,Fitness Tracker,Fitbit Charge,page_view,web,0,2026-06-11T22:10:00Z

@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-warm-cream: #F7F4EF;
+  --color-warm-cream-dark: #F4F1EA;
+  --color-warm-cream-darker: #EFECE4;
+  --color-deep-black: #050505;
+  --color-charcoal: #0B0D10;
+  --color-charcoal-light: #111315;
+  
+  --color-electric-mint: #18D68B;
+  --color-soft-lime: #E9F75D;
+  --color-butter-yellow: #F6E85D;
+  --color-coral-pink: #FF6B73;
+  --color-sky-cyan: #BFEFF3;
+  
+  --color-text-primary: #050505;
+  --color-text-secondary: rgba(5, 5, 5, 0.6);
+  --color-text-inverse: #F7F4EF;
+  --color-text-inverse-secondary: rgba(247, 244, 239, 0.6);
+
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-inverse: rgba(255, 255, 255, 0.1);
+
+  --font-body: var(--font-inter);
+  --font-display: var(--font-space);
+  
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 40px;
+
+  /* Typographic Hierarchy mapped to Tailwind text- sizes */
+  --text-hero: 80px;
+  --text-hero--line-height: 88px;
+  --text-hero--letter-spacing: -0.04em;
+  
+  --text-title-xl: 48px;
+  --text-title-xl--line-height: 56px;
+  --text-title-xl--letter-spacing: -0.02em;
+  
+  --text-title-lg: 32px;
+  --text-title-lg--line-height: 40px;
+  
+  --text-metric-lg: 64px;
+  --text-metric-lg--line-height: 64px;
+  --text-metric-lg--letter-spacing: -0.02em;
+  
+  --text-metric-md: 42px;
+  --text-metric-md--line-height: 48px;
+  
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--letter-spacing: 0.05em;
+
+  --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.04);
+  --shadow-glow-mint: 0 0 40px rgba(24, 214, 139, 0.15);
+  --shadow-glow-cyan: 0 0 60px rgba(191, 239, 243, 0.2);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-warm-cream);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}

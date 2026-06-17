@@ -1,0 +1,197 @@
+[
+  {
+    "route": "/",
+    "buttons": [
+      "Contact Sales",
+      "Watch Product Flow",
+      "Choose Plan",
+      "Contact Sales"
+    ],
+    "links": [
+      "Platform",
+      "Solutions",
+      "Customers",
+      "Pricing",
+      "Docs"
+    ],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/login",
+    "buttons": [
+      "setRole(r)}\n                  className={`p-4 rounded-2xl text-sm font-bold text-left border transition-all ${\n                    role === r \n                      ? 'bg-deep-black text-warm-cream border-deep-black shadow-soft' \n                      : 'bg-warm-cream text-text-secondary border-border-subtle hover:border-deep-black'\n                  }`}\n                >\n                  \n                    {r === 'Data Scientist' ?  : \n                     r === 'Approver' ?  : \n                     }\n                  \n                  {r}",
+      "{loading ?  : 'Enter Workspace'}\n            {!loading && }"
+    ],
+    "links": [
+      "Contact Sales"
+    ],
+    "inputs": 2,
+    "selects": 0
+  },
+  {
+    "route": "/onboarding",
+    "buttons": [
+      "Production\n                      Live data & live campaigns",
+      "Sandbox\n                      Testing & mock data",
+      "{tone}",
+      "Invite",
+      "setStep(s => s - 1)} className=\"text-text-secondary font-bold hover:text-deep-black transition-colors px-6 py-4\">\n                Back",
+      "{loading ? (\n                \n              ) : step === 7 ? (\n                <>Enter Command Center \n              ) : (\n                'Continue'\n              )}"
+    ],
+    "links": [],
+    "inputs": 5,
+    "selects": 4
+  },
+  {
+    "route": "/app",
+    "buttons": [
+      "setFilter(f)}\n                className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${\n                  filter === f \n                    ? 'bg-deep-black text-warm-cream border-deep-black' \n                    : 'bg-white text-text-secondary border-border-subtle hover:border-deep-black hover:text-text-primary shadow-soft'\n                }`}\n              >\n                {f}",
+      "Export",
+      "New Campaign",
+      "Regenerate Variants"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/data-sources",
+    "buttons": [
+      "Add Source"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/customer-360",
+    "buttons": [
+      "",
+      "Deploy to Push Channel"
+    ],
+    "links": [],
+    "inputs": 1,
+    "selects": 0
+  },
+  {
+    "route": "/app/segments",
+    "buttons": [
+      "Generate Segment"
+    ],
+    "links": [],
+    "inputs": 1,
+    "selects": 0
+  },
+  {
+    "route": "/app/campaigns",
+    "buttons": [
+      "setShowCreate(!showCreate)}\n          className=\"px-6 py-3 bg-electric-mint text-deep-black rounded-full font-bold shadow-glow-mint hover:scale-105 transition-transform flex items-center gap-2\"\n        >\n          {showCreate ? 'Close Builder' : <> New Campaign}",
+      "{f}",
+      "",
+      "setShowCreate(false)} className=\"px-6 py-4 text-text-secondary font-bold hover:text-deep-black\">Cancel",
+      "Save & Continue to Studio"
+    ],
+    "links": [],
+    "inputs": 3,
+    "selects": 3
+  },
+  {
+    "route": "/app/creative-studio",
+    "buttons": [
+      "setChannel(ch)}\n                    className={`py-3 px-2 rounded-xl text-xs font-bold border transition-colors ${channel === ch ? 'bg-butter-yellow text-deep-black border-butter-yellow' : 'bg-white/5 text-white/70 border-white/10 hover:border-white/30'}`}\n                  >\n                    {ch}",
+      "{loading ? (\n              \n            ) : (\n              <> Generate Variants\n            )}",
+      "Edit",
+      "Deploy"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 1
+  },
+  {
+    "route": "/app/experiments",
+    "buttons": [],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/model-ops",
+    "buttons": [
+      "Re-Train Model"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/audit-logs",
+    "buttons": [
+      "Export CSV"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/team",
+    "buttons": [
+      "setShowInvite(!showInvite)}\n          className=\"px-6 py-3 bg-electric-mint text-deep-black rounded-full font-bold shadow-glow-mint hover:scale-105 transition-transform flex items-center gap-2\"\n        >\n          {showInvite ? 'Close Form' : <> Invite Member}",
+      "",
+      "setShowInvite(false)} className=\"px-6 py-4 text-text-secondary font-bold hover:text-deep-black transition-colors\">Cancel",
+      "Send Invites"
+    ],
+    "links": [],
+    "inputs": 1,
+    "selects": 1
+  },
+  {
+    "route": "/app/billing",
+    "buttons": [
+      "View Invoices",
+      "Manage Payment",
+      "Upgrade to Enterprise"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "/app/settings",
+    "buttons": [
+      "Save Changes",
+      "setActiveTab(tab)}\n              className={`text-left px-5 py-4 rounded-2xl text-sm font-bold transition-all ${\n                activeTab === tab \n                  ? 'bg-deep-black text-warm-cream shadow-soft' \n                  : 'text-text-secondary hover:bg-warm-cream hover:text-deep-black'\n              }`}\n            >\n              {tab}",
+      "{t}",
+      "",
+      "Rotate Key",
+      "Reveal"
+    ],
+    "links": [],
+    "inputs": 3,
+    "selects": 0
+  },
+  {
+    "route": "/app/profile",
+    "buttons": [
+      "Manage",
+      "Update",
+      "Revoke"
+    ],
+    "links": [],
+    "inputs": 0,
+    "selects": 0
+  },
+  {
+    "route": "Sidebar & Topbar",
+    "buttons": [
+      "Search",
+      "",
+      "Search anything...\n              \u2318K"
+    ],
+    "links": [
+      "\n            <img alt={user.name} className=\"w-full h-full object-cover bg-white\" src={user.avatarUrl} />\n            <div className=\"absolute left-14 bg-white text-deep-black text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-soft z-50\">Profile</div>\n          "
+    ],
+    "inputs": 0,
+    "selects": 2
+  }
+]

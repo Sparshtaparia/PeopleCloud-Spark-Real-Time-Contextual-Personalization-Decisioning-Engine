@@ -1,0 +1,471 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// --- Core Tenancy & Identity ---
+
+model User {
+  id                    String       @id @default(cuid())
+  email                 String       @unique
+  passwordHash          String?
+  name                  String
+  avatarUrl             String?
+  canCreateOrganization Boolean      @default(false)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  memberships           Membership[]
+  auditLogs             AuditLog[]   @relation("Actor")
+}
+
+model Organization {
+  id            String       @id @default(cuid())
+  name          String
+  industry      String?
+  isSeededDemo  Boolean      @default(false)
+  isDeleted     Boolean      @default(false)
+  deletedAt     DateTime?
+  deletedBy     String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  workspaces    Workspace[]
+  memberships   Membership[]
+  billingPlan   BillingPlan?
+  brandVoice    BrandVoice?
+  auditLogs     AuditLog[]
+  usageMeters   UsageMeter[]
+  apiKeys       ApiKey[]
+}
+
+model Workspace {
+  id               String       @id @default(cuid())
+  organizationId   String
+  name             String
+  environment      String       @default("production") // production, sandbox
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  dataSources      DataSource[]
+  customers        Customer[]
+  segments         Segment[]
+  campaigns        Campaign[]
+  experiments      Experiment[]
+  modelVersions    ModelVersion[]
+  modelMetrics     ModelMetric[]
+  guardrails       GuardrailRule[]
+  notifications    Notification[]
+  auditLogs        AuditLog[]
+  workspaceSettings WorkspaceSetting[]
+  feedbackEvents   FeedbackEvent[]
+  webhookEndpoints WebhookEndpoint[]
+}
+
+model Membership {
+  id               String       @id @default(cuid())
+  userId           String
+  organizationId   String
+  role             String       // owner, admin, marketer, data_scientist, approver, analyst, viewer
+  workspaceAccess  String       // 'all' or specific workspaceId
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+}
+
+model WorkspaceSetting {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  key              String
+  value            String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace?   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+// --- Data Ingestion & Identity Graph ---
+
+model DataSource {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  name             String
+  type             String       // website_sdk, shopify, salesforce
+  status           String       // healthy, warning, failed, disconnected
+  eventsReceived   Int          @default(0)
+  lastSyncAt       DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  syncLogs         DataSourceSyncLog[]
+}
+
+model DataSourceSyncLog {
+  id               String       @id @default(cuid())
+  dataSourceId     String
+  status           String
+  eventsProcessed  Int          @default(0)
+  startedAt        DateTime     @default(now())
+  finishedAt       DateTime?
+  errorMessage     String?
+
+  dataSource       DataSource   @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+}
+
+model Customer {
+  id                  String       @id @default(cuid())
+  organizationId      String?
+  workspaceId         String
+  corePersonId        String       @unique
+  name                String?
+  emailHash           String?
+  lifecycleStage      String?
+  identityConfidence  Float        @default(0.0)
+  consentStatus       Boolean      @default(true)
+  predictedLtv        Float        @default(0.0)
+  churnRisk           Float        @default(0.0)
+  categoryAffinities  String       @default("{}") // JSON string for SQLite
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  workspace           Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  events              CustomerEvent[]
+  decisions           PersonalizationDecision[]
+  segments            SegmentCustomer[]
+}
+
+model CustomerEvent {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  customerId       String
+  eventType        String
+  channel          String
+  metadata         String       @default("{}") // JSON string
+  timestamp        DateTime     @default(now())
+
+  campaignId       String?
+  decisionId       String?
+
+  customer         Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+// --- Segmentation & Campaigns ---
+
+model Segment {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  name             String
+  audienceSize     Int          @default(0)
+  avgLtv           Float        @default(0.0)
+  convProb         Float        @default(0.0)
+  alert            Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaigns        Campaign[]
+  customers        SegmentCustomer[]
+}
+
+model SegmentCustomer {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  segmentId        String
+  customerId       String
+  createdAt        DateTime     @default(now())
+
+  segment          Segment      @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+  customer         Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([segmentId, customerId])
+}
+
+model Campaign {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  segmentId        String
+  name             String
+  objective        String
+  status           String       // draft, ai_generated, guardrail_checked, review, approved, live, learning, completed, paused
+  channel          String
+  lift             String       @default("-")
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  segment          Segment      @relation(fields: [segmentId], references: [id], onDelete: Restrict)
+  
+  creativeVariants CreativeVariant[]
+  experiments      Experiment[]
+}
+
+model CreativeVariant {
+  id                    String       @id @default(cuid())
+  organizationId        String?
+  workspaceId           String?
+  campaignId            String
+  headline              String
+  body                  String
+  cta                   String
+  predictedCtr          Float        @default(0.0)
+  brandSafetyScore      Float        @default(0.0)
+  complianceScore       Float        @default(0.0)
+  personalizationReason String?
+  status                String       // generated, approved, rejected
+  segmentId             String?
+  channel               String       @default("email")
+  strategy              String       @default("conversion")
+  subject               String?
+  preheader             String?
+  championReason        String?
+  guardrailWarnings     String?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  campaign              Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+// --- Decisioning & Experiments ---
+
+model Experiment {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  campaignId       String
+  type             String       // contextual_bandit, ab_test
+  status           String       // running, paused, completed
+  totalLift        Float        @default(0.0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaign         Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  variants         ExperimentVariant[]
+}
+
+model ExperimentVariant {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  experimentId     String
+  creativeVariantId String?
+  name             String
+  allocation       Float        @default(0.0)
+  impressions      Int          @default(0)
+  clicks           Int          @default(0)
+  conversions      Int          @default(0)
+  lift             Float        @default(0.0)
+  confidence       Float        @default(0.0)
+
+  experiment       Experiment   @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+}
+
+model PersonalizationDecision {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  customerId       String
+  campaignId       String?
+  creativeVariantId String?
+  experimentId     String?
+  offer            String
+  channel          String
+  confidence       Float
+  reasons          String       // JSON string
+  timestamp        DateTime     @default(now())
+
+  customer         Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  feedbackEvents   FeedbackEvent[]
+}
+
+model FeedbackEvent {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  decisionId       String?
+  customerId       String
+  eventType        String
+  channel          String
+  value            Float?
+  metadata         String?      // JSON
+  timestamp        DateTime     @default(now())
+
+  decision         PersonalizationDecision? @relation(fields: [decisionId], references: [id], onDelete: SetNull)
+  workspace        Workspace?   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+// --- Model Ops & Intelligence ---
+
+model ModelVersion {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  name             String
+  status           String       // champion, challenger, shadow, training
+  driftScore       Float        @default(0.0)
+  p95Latency       Float        @default(0.0)
+  featureFreshness Float        @default(1.0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model ModelMetric {
+  id               String       @id @default(cuid())
+  organizationId   String
+  workspaceId      String
+  modelVersionId   String
+  modelName        String
+  timestamp        DateTime     @default(now())
+  
+  driftScore       Float        @default(0.0)
+  latencyP50       Float        @default(0.0)
+  latencyP95       Float        @default(0.0)
+  latencyP99       Float        @default(0.0)
+  errorRate        Float        @default(0.0)
+  featureFreshness Float        @default(1.0)
+  toxicityScore    Float        @default(0.0)
+  onlineCtrLift    Float        @default(0.0)
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+// --- Ops, Billing & Security ---
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  workspaceId    String?
+  correlationId  String?
+
+  actorId        String?
+  actorName      String
+  actorRole      String
+  action         String
+  resourceType   String
+  resourceId     String?
+  severity       String   @default("info")
+  metadata       String?  // JSON string
+  ipAddress      String?
+  userAgent      String?
+  timestamp      DateTime @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  workspace      Workspace?   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  actor          User?        @relation("Actor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, workspaceId])
+  @@index([correlationId])
+  @@index([timestamp])
+}
+
+model UsageMeter {
+  id               String       @id @default(cuid())
+  organizationId   String
+  workspaceId      String?
+  metric           String       // events_ingested, profiles_resolved, decisions_served, genai_creatives_generated
+  amount           Int          @default(0)
+  period           String       // YYYY-MM
+  updatedAt        DateTime     @updatedAt
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, metric, period])
+}
+
+model BillingPlan {
+  id               String       @id @default(cuid())
+  organizationId   String       @unique
+  tier             String       // Growth, Enterprise
+  price            Float
+  billingPeriod    String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model BrandVoice {
+  id               String       @id @default(cuid())
+  organizationId   String       @unique
+  coreTone         String
+  bannedPhrases    String
+  approvedClaims   String
+  strictness       Int          @default(90)
+  updatedAt        DateTime     @updatedAt
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model GuardrailRule {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  name             String
+  type             String
+  isActive         Boolean      @default(true)
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String
+  title            String
+  message          String
+  type             String       // info, warning, success, error
+  isRead           Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+
+  workspace        Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model ApiKey {
+  id               String       @id @default(cuid())
+  organizationId   String
+  workspaceId      String?
+  name             String
+  maskedKey        String
+  keyHash          String
+  type             String       // public_sdk, secret_server
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  lastUsedAt       DateTime?
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model WebhookEndpoint {
+  id               String       @id @default(cuid())
+  organizationId   String?
+  workspaceId      String?
+  url              String
+  secret           String
+  events           String       // JSON array of event types
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workspace        Workspace?   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
