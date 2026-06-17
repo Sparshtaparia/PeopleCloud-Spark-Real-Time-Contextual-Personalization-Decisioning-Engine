@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+supabase
+google-generativeai
+faiss-cpu
+scikit-learn
+pydantic
+python-dotenv
+pandas
+numpy
