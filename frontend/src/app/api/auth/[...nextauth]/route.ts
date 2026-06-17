@@ -1,6 +1,20 @@
-import NextAuth from "next-auth"
+import NextAuth, { Session, User } from "next-auth"
+import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaClient } from "@prisma/client"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      name?: string | null
+      email?: string | null
+      image?: string | null
+      role?: string
+      organizationId?: string
+    }
+  }
+}
 
 const prisma = new PrismaClient()
 
@@ -33,7 +47,7 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
         
@@ -51,7 +65,7 @@ export const authOptions = {
       }
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       if (user) {
         token.sub = user.id
       }
