@@ -151,7 +151,7 @@ export default function AuditLogs() {
                 <div className="flex-[2] flex items-center gap-4">
                   {/* Timeline Dot */}
                   <div className="hidden md:flex absolute left-[-6px] w-4 h-4 rounded-full bg-warm-cream border-2 border-border-subtle items-center justify-center group-hover:border-deep-black transition-colors z-10">
-                    <div className={`w-1.5 h-1.5 rounded-full ${color.replace('text-', 'bg-')} ${color === 'text-deep-black' ? 'bg-deep-black' : ''}`}></div>
+                    <div className={`w-1.5 h-1.5 rounded-full ${color.replace('text-', 'bg-')}`}></div>
                   </div>
                   
                   <div className="w-10 h-10 rounded-xl bg-warm-cream flex items-center justify-center shrink-0 border border-border-subtle">
