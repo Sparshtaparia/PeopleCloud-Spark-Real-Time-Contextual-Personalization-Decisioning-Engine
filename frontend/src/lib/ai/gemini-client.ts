@@ -96,8 +96,7 @@ export class GeminiClient {
 
     const prompt = `You are a marketing analytics explainer. Explain the following in plain language for a non-technical marketer. Keep it under 3 sentences:\n\n${context}`
 
-    let lastError: Error | null = null
-    for (let attempt = 0; attempt <= this.config.maxRetries!; attempt++) {
+    for (let attempt = 0; attempt <= 1; attempt++) {
       try {
         const response = await this.callAPI(prompt)
         const cleaned = response
@@ -107,15 +106,13 @@ export class GeminiClient {
         if (cleaned.length <= 10) throw new GeminiError("Response too short", "EMPTY_RESPONSE")
         return cleaned
       } catch (err) {
-        lastError = err instanceof Error ? err : new Error(String(err))
-        if (attempt < this.config.maxRetries!) {
-          const isRateLimit = err instanceof GeminiError && err.code === "RATE_LIMITED"
-          await sleep(isRateLimit ? 2000 * Math.pow(2, attempt) : 1000 * (attempt + 1))
-        }
+        const isRateLimit = err instanceof GeminiError && err.code === "RATE_LIMITED"
+        if (isRateLimit) throw err
+        if (attempt < 1) await sleep(1000)
       }
     }
 
-    throw lastError || new GeminiError("Explanation generation failed after retries", "GENERATION_FAILED")
+    throw new GeminiError("Explanation generation failed", "GENERATION_FAILED")
   }
 
   private async callAPI(prompt: string): Promise<string> {
