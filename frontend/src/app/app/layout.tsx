@@ -257,7 +257,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showOrgMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-primary hover:border-deep-black hover:shadow-md shadow-soft'}`}
               >
                 <Building2 size={12} className={`lg:w-[14px] lg:h-[14px] ${showOrgMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
-                <span className="font-display font-bold text-xs lg:text-sm tracking-tight max-w-[100px] lg:max-w-[140px] truncate">{currentOrg.name}</span>
+                <span className="font-display font-bold text-xs lg:text-sm tracking-tight max-w-[60px] lg:max-w-[140px] truncate">{currentOrg.name}</span>
                 <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showOrgMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 
@@ -344,7 +344,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showWsMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-secondary hover:border-deep-black hover:text-text-primary hover:shadow-md shadow-soft'}`}
               >
                 <Layers size={12} className={`lg:w-[14px] lg:h-[14px] ${showWsMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
-                <span className="font-display text-xs lg:text-sm font-semibold max-w-[100px] lg:max-w-[160px] truncate">{currentWorkspace.name}</span>
+                <span className="font-display text-xs lg:text-sm font-semibold max-w-[60px] lg:max-w-[160px] truncate">{currentWorkspace.name}</span>
                 <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showWsMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 

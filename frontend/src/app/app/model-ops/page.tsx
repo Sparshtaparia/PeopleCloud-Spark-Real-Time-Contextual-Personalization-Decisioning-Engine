@@ -121,54 +121,54 @@ export default function MLOpsConsole() {
         </div>
 
         {/* Model Health Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 relative z-10">
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-colors">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">P95 Latency</span>
-              <Gauge className="text-electric-mint" size={20} />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8 mb-8 lg:mb-12 relative z-10">
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-8 hover:bg-white/10 transition-colors">
+            <div className="flex items-center justify-between mb-3 lg:mb-4">
+              <span className="text-[9px] lg:text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">P95 Latency</span>
+              <Gauge className="text-electric-mint" size={16} />
             </div>
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">{data.decision_api_latency_p95}ms</span>
-              <span className="text-electric-mint text-sm font-bold">↓ 4.2%</span>
+            <div className="flex items-baseline gap-2 lg:gap-3">
+              <span className="font-display text-2xl lg:text-4xl font-bold">{data.decision_api_latency_p95}ms</span>
+              <span className="text-electric-mint text-xs lg:text-sm font-bold">↓ 4.2%</span>
             </div>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-colors">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Champion Model</span>
-              <GitMerge className="text-sky-cyan" size={20} />
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-8 hover:bg-white/10 transition-colors">
+            <div className="flex items-center justify-between mb-3 lg:mb-4">
+              <span className="text-[9px] lg:text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Champion Model</span>
+              <GitMerge className="text-sky-cyan" size={16} />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-xl font-bold truncate" title={data.model}>{data.model}</span>
+              <span className="font-display text-base lg:text-xl font-bold truncate" title={data.model}>{data.model}</span>
             </div>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-colors">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Data Drift (KL)</span>
-              <Activity className="text-butter-yellow" size={20} />
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-8 hover:bg-white/10 transition-colors">
+            <div className="flex items-center justify-between mb-3 lg:mb-4">
+              <span className="text-[9px] lg:text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Data Drift (KL)</span>
+              <Activity className="text-butter-yellow" size={16} />
             </div>
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">{data.feature_drift_kl}</span>
-              <span className="text-electric-mint text-sm font-bold">Stable</span>
+            <div className="flex items-baseline gap-2 lg:gap-3">
+              <span className="font-display text-2xl lg:text-4xl font-bold">{data.feature_drift_kl}</span>
+              <span className="text-electric-mint text-xs lg:text-sm font-bold">Stable</span>
             </div>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-colors">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Status</span>
-              <ShieldAlert className="text-electric-mint" size={20} />
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-4 lg:p-8 hover:bg-white/10 transition-colors">
+            <div className="flex items-center justify-between mb-3 lg:mb-4">
+              <span className="text-[9px] lg:text-[10px] font-bold text-text-inverse-secondary uppercase tracking-widest">Status</span>
+              <ShieldAlert className="text-electric-mint" size={16} />
             </div>
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">{data.status}</span>
-              <span className="w-3 h-3 bg-electric-mint rounded-full animate-pulse shadow-glow-mint"></span>
+            <div className="flex items-baseline gap-2 lg:gap-3">
+              <span className="font-display text-2xl lg:text-4xl font-bold">{data.status}</span>
+              <span className="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-electric-mint rounded-full animate-pulse shadow-glow-mint"></span>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 relative z-10">
+        <div className="grid grid-cols-12 gap-4 lg:gap-8 relative z-10">
           
           {/* Drift Monitor Chart */}
-          <div className="col-span-12 lg:col-span-8 bg-deep-black rounded-3xl p-8 border border-border-inverse">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="font-display text-2xl font-bold">Model Drift Monitor</h3>
+          <div className="col-span-12 lg:col-span-8 bg-deep-black rounded-3xl p-4 lg:p-8 border border-border-inverse">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 mb-6 lg:mb-8">
+              <h3 className="font-display text-xl lg:text-2xl font-bold">Model Drift Monitor</h3>
               <div className="flex gap-2">
                 {(['1H', '24H', '7D'] as const).map(p => (
                   <button key={p} onClick={() => setPeriod(p)}
@@ -178,11 +178,11 @@ export default function MLOpsConsole() {
                 ))}
               </div>
             </div>
-            <div className="h-64 w-full relative flex items-end justify-between gap-1 pt-8">
+            <div className="h-48 lg:h-64 w-full relative flex items-end justify-between gap-0.5 lg:gap-1 pt-6 lg:pt-8">
               <div className="absolute inset-0 border-b border-l border-white/10 flex flex-col justify-between pointer-events-none pb-1">
                 <div className="w-full border-t border-dashed border-white/10 h-0"></div>
                 <div className="w-full border-t border-dashed border-white/10 h-0 relative">
-                  <span className="absolute -left-10 -top-3 text-xs font-mono text-white/40">0.05</span>
+                  <span className="absolute -left-6 lg:-left-10 -top-3 text-[10px] lg:text-xs font-mono text-white/40">0.05</span>
                 </div>
               </div>
               
@@ -207,7 +207,7 @@ export default function MLOpsConsole() {
                         title={`${dayLabels[i]}: ${h}% activity`}
                       />
                     </div>
-                    <span className="text-[9px] font-mono text-white/30">
+                    <span className="text-[7px] lg:text-[9px] font-mono text-white/30 truncate max-w-full">
                       {dayLabels[i]}
                     </span>
                   </div>
@@ -217,35 +217,35 @@ export default function MLOpsConsole() {
           </div>
 
           {/* Feature Health Dashboard */}
-          <div className="col-span-12 lg:col-span-4 bg-deep-black rounded-3xl p-8 border border-border-inverse flex flex-col">
-            <h3 className="font-display text-2xl font-bold mb-8">Feature Health</h3>
+          <div className="col-span-12 lg:col-span-4 bg-deep-black rounded-3xl p-4 lg:p-8 border border-border-inverse flex flex-col">
+            <h3 className="font-display text-xl lg:text-2xl font-bold mb-6 lg:mb-8">Feature Health</h3>
             
-            <div className="space-y-4 flex-1">
-              <div className="flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+            <div className="space-y-3 lg:space-y-4 flex-1">
+              <div className="flex items-center justify-between p-4 lg:p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="w-1.5 h-10 bg-electric-mint rounded-full"></div>
                   <div>
-                    <p className="font-bold text-white text-sm mb-1">GenAI Output Toxicity</p>
-                    <p className="text-[10px] text-white/50 font-mono">Last Flag: 2m ago</p>
+                    <p className="font-bold text-white text-xs lg:text-sm mb-1">GenAI Output Toxicity</p>
+                    <p className="text-[9px] lg:text-[10px] text-white/50 font-mono">Last Flag: 2m ago</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-display text-xl font-bold text-white">{(data.toxicity_flag_rate * 100).toFixed(1)}%</p>
-                  <p className="text-[10px] text-electric-mint font-bold uppercase tracking-widest mt-1">Stable</p>
+                <div className="text-right shrink-0">
+                  <p className="font-display text-base lg:text-xl font-bold text-white">{(data.toxicity_flag_rate * 100).toFixed(1)}%</p>
+                  <p className="text-[9px] lg:text-[10px] text-electric-mint font-bold uppercase tracking-widest mt-1">Stable</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-1.5 h-10 bg-electric-mint rounded-full"></div>
-                  <div>
-                    <p className="font-bold text-white text-sm mb-1">User Affinity Store</p>
-                    <p className="text-[10px] text-white/50 font-mono">Last Sync: 5m ago</p>
+              <div className="flex items-center justify-between p-4 lg:p-5 bg-white/5 rounded-2xl border border-white/5 hover:border-white/20 transition-colors">
+                <div className="flex items-center gap-3 lg:gap-4">
+                  <div className="w-1.5 h-8 lg:h-10 bg-electric-mint rounded-full"></div>
+                  <div className="min-w-0">
+                    <p className="font-bold text-white text-xs lg:text-sm mb-1 truncate">User Affinity Store</p>
+                    <p className="text-[9px] lg:text-[10px] text-white/50 font-mono">Last Sync: 5m ago</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-display text-xl font-bold text-white">0.45%</p>
-                  <p className="text-[10px] text-electric-mint font-bold uppercase tracking-widest mt-1">Fresh</p>
+                  <p className="font-display text-base lg:text-xl font-bold text-white">0.45%</p>
+                  <p className="text-[9px] lg:text-[10px] text-electric-mint font-bold uppercase tracking-widest mt-1">Fresh</p>
                 </div>
               </div>
             </div>
