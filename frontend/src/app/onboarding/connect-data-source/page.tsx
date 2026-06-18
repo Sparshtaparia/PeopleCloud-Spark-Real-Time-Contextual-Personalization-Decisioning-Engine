@@ -543,7 +543,7 @@ export default function ConnectDataSourcePage() {
                 </div>
                 <div className="bg-warm-cream rounded-2xl p-5 border border-border-subtle">
                   <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary">Import Duration</p>
-                  <p className="font-display text-3xl font-bold text-deep-black mt-1">{importResult.experimentsGenerated || 2}</p>
+                  <p className="font-display text-3xl font-bold text-deep-black mt-1">{(importResult.durationMs / 1000).toFixed(1)}s</p>
                 </div>
               </div>
 

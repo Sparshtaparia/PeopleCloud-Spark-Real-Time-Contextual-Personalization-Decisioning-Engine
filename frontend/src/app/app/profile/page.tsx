@@ -15,6 +15,8 @@ export default function Profile() {
       .catch(console.error)
   }, [])
 
+  if (!user || !currentOrg) return null
+
   return (
     <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       

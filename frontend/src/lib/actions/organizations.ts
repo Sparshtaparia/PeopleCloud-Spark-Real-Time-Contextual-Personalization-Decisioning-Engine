@@ -29,7 +29,7 @@ export async function deleteOrganizationAction(input: {
       action: "organization.delete_blocked",
       resourceType: "Organization",
       resourceId: org.id,
-      severity: "warning",
+      severity: "Warning" as const,
       metadata: JSON.stringify({
         reason: "Seeded demo organization is protected"
       })
@@ -61,7 +61,7 @@ export async function deleteOrganizationAction(input: {
     action: "organization.deleted",
     resourceType: "Organization",
     resourceId: org.id,
-    severity: "critical",
+    severity: "High" as const,
     metadata: JSON.stringify({
       organizationName: org.name,
       deletionMode: "soft_delete"

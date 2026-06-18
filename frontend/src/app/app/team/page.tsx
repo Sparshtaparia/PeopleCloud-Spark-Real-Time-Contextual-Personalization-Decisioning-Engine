@@ -57,7 +57,7 @@ export default function Team() {
       <div className="flex justify-between items-end mb-12 shrink-0">
         <div>
           <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">Team Management</h1>
-          <p className="text-text-secondary font-medium">Manage access, roles, and workspace permissions for {currentOrg.name}.</p>
+          <p className="text-text-secondary font-medium">Manage access, roles, and workspace permissions for {currentOrg?.name}.</p>
         </div>
         <button 
           onClick={() => setShowInvite(!showInvite)}

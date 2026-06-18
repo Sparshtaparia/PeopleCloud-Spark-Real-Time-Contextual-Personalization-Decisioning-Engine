@@ -55,7 +55,6 @@ export async function simulateBanditStep(experimentId: string, organizationId: s
       eventType: string
       channel: string
       campaignId: string | null
-      experimentId: string
       metadata: string
     }> = []
 

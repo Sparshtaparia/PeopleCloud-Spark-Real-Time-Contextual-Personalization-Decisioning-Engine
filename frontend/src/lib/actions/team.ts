@@ -61,7 +61,6 @@ export async function inviteMember(organizationId: string, email: string, role: 
 
     await createAuditLog({
       organizationId,
-      workspaceId: null,
       actorId: user.id,
       actorName: user.name || "Unknown",
       actorRole: membership.role,
