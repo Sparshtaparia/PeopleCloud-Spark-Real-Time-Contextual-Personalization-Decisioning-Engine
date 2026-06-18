@@ -108,7 +108,7 @@ export default function CreativeStudio() {
   }
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 h-[calc(100vh-80px)] flex flex-col">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 h-[calc(100vh-80px)] flex flex-col">
       
       <div className="flex justify-between items-end mb-8 shrink-0">
         <div>

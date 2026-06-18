@@ -52,12 +52,12 @@ export default function Customer360() {
     })
   }, [selectedCustomer])
 
-  if (loading && !profile) return <div className="px-12 py-8 animate-pulse"><div className="h-[800px] bg-white/50 rounded-3xl"></div></div>
+  if (loading && !profile) return <div className="px-4 lg:px-12 py-4 lg:py-8 animate-pulse"><div className="h-[800px] bg-white/50 rounded-3xl"></div></div>
 
   const topAffinities = profile ? Object.entries(profile.parsedAffinities) : []
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 h-[calc(100vh-80px)] overflow-hidden flex flex-col">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 h-[calc(100vh-80px)] overflow-hidden flex flex-col">
       
       <div className="flex justify-between items-end mb-8 shrink-0">
         <div>

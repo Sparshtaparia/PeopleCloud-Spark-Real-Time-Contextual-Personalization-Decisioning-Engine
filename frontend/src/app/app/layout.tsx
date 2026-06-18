@@ -174,8 +174,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full bg-warm-cream">
       
+      {/* Mobile Hamburger */}
+      <button onClick={() => setShowSearch(true)} className="lg:hidden fixed top-5 left-4 z-50 w-10 h-10 bg-deep-black rounded-xl flex items-center justify-center text-white shadow-2xl">
+        <Search size={18} />
+      </button>
+
       {/* AppRail: Floating deep black vertical navigation */}
-      <div className="w-[88px] h-screen bg-deep-black text-white flex flex-col items-center py-6 fixed left-0 top-0 z-50">
+      <div className="hidden lg:flex w-[88px] h-screen bg-deep-black text-white flex-col items-center py-6 fixed left-0 top-0 z-50">
         
         {/* Logo */}
         <div className="w-12 h-12 bg-white rounded-[16px] flex items-center justify-center mb-8 shrink-0 relative group">
@@ -230,23 +235,23 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 ml-[88px] w-full min-h-screen flex flex-col relative">
+      <div className="flex-1 ml-0 lg:ml-[88px] w-full min-h-screen flex flex-col relative">
         
         {/* Topbar */}
-        <header className="sticky top-0 z-40 bg-warm-cream/80 backdrop-blur-xl border-b border-border-subtle h-20 flex justify-between items-center px-12 w-full">
+        <header className="sticky top-0 z-40 bg-warm-cream/80 backdrop-blur-xl border-b border-border-subtle h-16 lg:h-20 flex justify-between items-center px-4 lg:px-12 w-full">
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 lg:gap-4 min-w-0">
 
             {/* Org Dropdown */}
             <div className="relative" ref={orgMenuRef}>
               <button
                 id="org-switcher"
                 onClick={() => { setShowOrgMenu(v => !v); setShowWsMenu(false) }}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl border transition-all duration-200 group ${showOrgMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-primary hover:border-deep-black hover:shadow-md shadow-soft'}`}
+                className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showOrgMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-primary hover:border-deep-black hover:shadow-md shadow-soft'}`}
               >
-                <Building2 size={14} className={showOrgMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'} />
-                <span className="font-display font-bold text-sm tracking-tight max-w-[140px] truncate">{currentOrg.name}</span>
-                <ChevronDown size={13} className={`transition-transform duration-200 shrink-0 ${showOrgMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
+                <Building2 size={12} className={`lg:w-[14px] lg:h-[14px] ${showOrgMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
+                <span className="font-display font-bold text-xs lg:text-sm tracking-tight max-w-[80px] lg:max-w-[140px] truncate">{currentOrg.name}</span>
+                <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showOrgMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 
               {showOrgMenu && (
@@ -329,11 +334,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <button
                 id="workspace-switcher"
                 onClick={() => { setShowWsMenu(v => !v); setShowOrgMenu(false) }}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl border transition-all duration-200 group ${showWsMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-secondary hover:border-deep-black hover:text-text-primary hover:shadow-md shadow-soft'}`}
+                className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showWsMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-secondary hover:border-deep-black hover:text-text-primary hover:shadow-md shadow-soft'}`}
               >
-                <Layers size={14} className={showWsMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'} />
-                <span className="font-display text-sm font-semibold max-w-[160px] truncate">{currentWorkspace.name}</span>
-                <ChevronDown size={13} className={`transition-transform duration-200 shrink-0 ${showWsMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
+                <Layers size={12} className={`lg:w-[14px] lg:h-[14px] ${showWsMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
+                <span className="font-display text-xs lg:text-sm font-semibold max-w-[80px] lg:max-w-[160px] truncate">{currentWorkspace.name}</span>
+                <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showWsMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 
               {showWsMenu && (
@@ -375,18 +380,21 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 lg:gap-6">
             <button onClick={() => setShowSearch(true)} className="hidden xl:flex items-center gap-3 px-4 py-2 bg-white border border-border-subtle rounded-full text-text-secondary hover:border-text-secondary transition-colors shadow-soft">
               <Search size={16} />
               <span className="text-sm font-medium">Search anything...</span>
               <span className="ml-8 text-xs font-bold border border-border-subtle px-1.5 py-0.5 rounded bg-warm-cream">⌘K</span>
             </button>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 lg:gap-3">
               <div className="text-right hidden md:block">
                 <p className="text-sm font-bold text-text-primary">{user.name}</p>
                 <p className="text-label-sm text-text-secondary uppercase">{user.role.replace('_', ' ')}</p>
               </div>
+              <button onClick={() => setShowProfile(true)} className="lg:hidden w-8 h-8 rounded-lg overflow-hidden border-2 border-white/20">
+                <img alt={user.name} className="w-full h-full object-cover" src={user.avatarUrl} />
+              </button>
             </div>
           </div>
         </header>

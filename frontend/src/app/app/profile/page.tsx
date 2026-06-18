@@ -18,7 +18,7 @@ export default function Profile() {
   if (!user || !currentOrg) return null
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
       <div className="mb-12">
         <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">Personal Profile</h1>

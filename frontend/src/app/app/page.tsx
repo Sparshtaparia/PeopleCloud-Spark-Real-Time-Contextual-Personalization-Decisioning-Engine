@@ -137,7 +137,7 @@ export default function CommandCenter() {
   }
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
       
       {/* Header & Pill Filters */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-6">

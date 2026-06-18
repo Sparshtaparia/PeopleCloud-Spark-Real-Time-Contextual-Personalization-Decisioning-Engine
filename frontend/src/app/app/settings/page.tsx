@@ -102,7 +102,7 @@ export default function Settings() {
   ]
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700 h-[calc(100vh-80px)] flex flex-col">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700 h-[calc(100vh-80px)] flex flex-col">
       {toast && <Toast msg={toast} onClose={() => setToast('')} />}
 
       <div className="flex justify-between items-end mb-12 shrink-0">

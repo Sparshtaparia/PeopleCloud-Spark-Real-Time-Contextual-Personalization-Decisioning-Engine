@@ -10,7 +10,7 @@ import { getAuditLogs } from '@/lib/actions/audit'
 import { formatDateTime } from '@/lib/formatters'
 
 export default function Page() {
-  return <Suspense fallback={<div className="px-12 py-8 animate-pulse"><div className="h-[400px] bg-white/50 rounded-3xl"></div></div>}><AuditLogs /></Suspense>
+  return <Suspense fallback={<div className="px-4 lg:px-12 py-4 lg:py-8 animate-pulse"><div className="h-[400px] bg-white/50 rounded-3xl"></div></div>}><AuditLogs /></Suspense>
 }
 
 function AuditLogs() {
@@ -88,7 +88,7 @@ function AuditLogs() {
   }
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
       <div className="flex justify-between items-end mb-12">
         <div>

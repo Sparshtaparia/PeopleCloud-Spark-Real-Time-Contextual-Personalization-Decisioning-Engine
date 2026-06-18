@@ -97,10 +97,10 @@ export default function MLOpsConsole() {
 
   const driftChart = driftSeries.length > 0 ? driftSeries : new Array(10).fill(0)
 
-  if (loading) return <div className="px-12 py-8 animate-pulse"><div className="h-screen bg-charcoal rounded-3xl"></div></div>
+  if (loading) return <div className="px-4 lg:px-12 py-4 lg:py-8 animate-pulse"><div className="h-screen bg-charcoal rounded-3xl"></div></div>
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
       
       {/* Black Cockpit Theme for MLOps */}
       <div className="bg-charcoal text-white rounded-[40px] p-10 min-h-[800px] shadow-2xl relative overflow-hidden border border-border-inverse">

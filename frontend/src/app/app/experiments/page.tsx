@@ -136,7 +136,7 @@ export default function Experiments() {
     }
   }
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
       <div className="flex justify-between items-end mb-10">
         <div>
           <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">Experiments & Bandits</h1>

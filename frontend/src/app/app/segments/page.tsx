@@ -54,7 +54,7 @@ export default function Segments() {
   }
 
   return (
-    <div className="px-12 py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
       <div className="flex justify-between items-end mb-12">
         <div>
