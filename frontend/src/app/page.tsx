@@ -23,7 +23,7 @@ export default function LandingPage() {
         <div className="max-w-[1440px] mx-auto px-6 flex justify-between items-center">
             <div className="flex items-center gap-10">
               <Link href="/" className="flex items-center gap-3">
-                <span className="font-display font-bold text-2xl tracking-tighter text-deep-black hidden md:block">PeopleCloud <span className="inline-block px-3 py-0.5 bg-electric-mint rounded-[40px] -rotate-1 transform shadow-soft">Spark</span></span>
+                <span className="font-display font-bold text-xl sm:text-2xl tracking-tighter text-deep-black">PeopleCloud <span className="inline-block px-2 sm:px-3 py-0.5 bg-electric-mint rounded-[40px] -rotate-1 transform shadow-soft text-sm sm:text-base">Spark</span></span>
               </Link>
             
             <nav className="hidden lg:flex items-center gap-8">
@@ -55,69 +55,69 @@ export default function LandingPage() {
               <span className="text-xs font-bold uppercase tracking-widest text-deep-black">Spark Engine 2.0 is Live</span>
             </div>
 
-            <h1 className="font-display text-[64px] md:text-[96px] leading-[0.9] font-bold tracking-tighter text-deep-black mb-8">
-              Personalization infrastructure for brands that <span className="inline-block px-6 py-2 bg-butter-yellow rounded-[40px] -rotate-2 transform shadow-soft mt-4">know every customer.</span>
+            <h1 className="font-display text-[36px] sm:text-[64px] md:text-[96px] leading-[0.9] font-bold tracking-tighter text-deep-black mb-8">
+              Personalization infrastructure for brands that <span className="inline-block px-4 sm:px-6 py-1 sm:py-2 bg-butter-yellow rounded-[40px] -rotate-2 transform shadow-soft mt-4">know every customer.</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-text-secondary mb-12 max-w-4xl mx-auto leading-relaxed">
               Resolve identity, generate brand-safe AI creatives, activate 1:1 campaigns, and learn from every customer signal — all inside one enterprise AI marketing platform.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link href="/login" className="w-full sm:w-auto px-10 py-5 bg-deep-black hover:bg-charcoal transition-colors text-warm-cream font-bold rounded-full text-lg flex items-center justify-center gap-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:-translate-y-1">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-md sm:max-w-none mx-auto">
+              <Link href="/login" className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-deep-black hover:bg-charcoal transition-colors text-warm-cream font-bold rounded-full text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:-translate-y-1">
                 Enter Demo Workspace
-                <ArrowRight size={24} />
+                <ArrowRight size={20} className="sm:w-6 sm:h-6" />
               </Link>
-              <button onClick={() => setShowVideoModal(true)} className="w-full sm:w-auto px-10 py-5 bg-white hover:bg-warm-cream-dark transition-colors text-deep-black font-bold rounded-full text-lg flex items-center justify-center gap-3 shadow-soft border border-border-subtle hover:-translate-y-1">
-                <Play size={24} />
+              <button onClick={() => setShowVideoModal(true)} className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-white hover:bg-warm-cream-dark transition-colors text-deep-black font-bold rounded-full text-base sm:text-lg flex items-center justify-center gap-3 shadow-soft border border-border-subtle hover:-translate-y-1">
+                <Play size={20} className="sm:w-6 sm:h-6" />
                 Watch Product Flow
               </button>
             </div>
           </div>
 
           {/* Floating Product Preview */}
-          <div className="mt-24 relative mx-auto max-w-[1200px] aspect-[16/9] rounded-[40px] bg-charcoal shadow-2xl border-[8px] border-white overflow-hidden group">
+          <div className="mt-24 relative mx-auto max-w-[1200px] aspect-[16/9] rounded-[24px] sm:rounded-[40px] bg-charcoal shadow-2xl border-[4px] sm:border-[8px] border-white overflow-hidden group">
             {/* Fake Topbar */}
-            <div className="h-14 border-b border-white/10 flex items-center px-6 justify-between bg-charcoal relative z-20">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-coral-pink"></div>
-                <div className="w-3 h-3 rounded-full bg-butter-yellow"></div>
-                <div className="w-3 h-3 rounded-full bg-electric-mint"></div>
+            <div className="h-10 sm:h-14 border-b border-white/10 flex items-center px-3 sm:px-6 justify-between bg-charcoal relative z-20">
+              <div className="flex gap-1.5 sm:gap-2">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-coral-pink"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-butter-yellow"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-electric-mint"></div>
               </div>
-              <div className="h-6 w-64 bg-white/5 rounded-full flex items-center justify-center px-4">
-                <span className="text-[10px] font-mono text-white/40">spark.epsilon.com/app/command-center</span>
+              <div className="h-5 sm:h-6 w-40 sm:w-64 bg-white/5 rounded-full flex items-center justify-center px-2 sm:px-4">
+                <span className="text-[6px] sm:text-[10px] font-mono text-white/40 truncate">spark.epsilon.com/app/command-center</span>
               </div>
-              <div className="w-12"></div>
+              <div className="w-6 sm:w-12"></div>
             </div>
             
             {/* Mock Content */}
-            <div className="p-10 flex gap-8 h-full bg-charcoal relative z-10">
+            <div className="p-3 sm:p-6 md:p-10 flex gap-3 sm:gap-6 md:gap-8 h-full bg-charcoal relative z-10">
               {/* Left Nav */}
-              <div className="w-20 rounded-[24px] bg-white/5 border border-white/10 flex flex-col items-center py-6 gap-4 shrink-0">
-                <div className="w-10 h-10 bg-electric-mint rounded-xl mb-4"></div>
-                {[1,2,3,4,5].map(i => <div key={i} className="w-10 h-10 rounded-xl bg-white/5"></div>)}
+              <div className="w-10 sm:w-14 md:w-20 rounded-[12px] sm:rounded-[24px] bg-white/5 border border-white/10 flex flex-col items-center py-3 sm:py-6 gap-2 sm:gap-4 shrink-0">
+                <div className="w-5 h-5 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-electric-mint rounded-lg sm:rounded-xl mb-2 sm:mb-4"></div>
+                {[1,2,3,4,5].map(i => <div key={i} className="w-5 h-5 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-lg sm:rounded-xl bg-white/5"></div>)}
               </div>
               {/* Main Content */}
-              <div className="flex-1 flex flex-col gap-8">
-                <div className="flex justify-between items-end">
-                  <div>
-                    <div className="w-48 h-10 bg-white/10 rounded-xl mb-2"></div>
-                    <div className="w-64 h-4 bg-white/5 rounded-full"></div>
+              <div className="flex-1 flex flex-col gap-3 sm:gap-6 md:gap-8 min-w-0">
+                <div className="flex justify-between items-end gap-2">
+                  <div className="min-w-0">
+                    <div className="w-20 sm:w-36 md:w-48 h-5 sm:h-8 md:h-10 bg-white/10 rounded-lg sm:rounded-xl mb-1 sm:mb-2"></div>
+                    <div className="w-24 sm:w-48 md:w-64 h-2 sm:h-3 md:h-4 bg-white/5 rounded-full"></div>
                   </div>
-                  <div className="flex gap-4">
-                    <div className="w-24 h-10 bg-white/10 rounded-full"></div>
-                    <div className="w-32 h-10 bg-electric-mint rounded-full"></div>
+                  <div className="flex gap-2 sm:gap-4 shrink-0">
+                    <div className="w-12 sm:w-20 md:w-24 h-6 sm:h-8 md:h-10 bg-white/10 rounded-full"></div>
+                    <div className="w-16 sm:w-24 md:w-32 h-6 sm:h-8 md:h-10 bg-electric-mint rounded-full"></div>
                   </div>
                 </div>
-                <div className="flex gap-8 flex-1">
-                  <div className="flex-[2] bg-white rounded-[32px] p-8 relative overflow-hidden">
-                    <div className="w-32 h-8 bg-charcoal/10 rounded-full mb-12"></div>
-                    <div className="text-[120px] font-display font-bold leading-none text-charcoal">+18.4%</div>
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-electric-mint/20 rounded-full blur-[60px]"></div>
+                <div className="flex gap-3 sm:gap-6 md:gap-8 flex-1 min-h-0">
+                  <div className="flex-[2] bg-white rounded-[16px] sm:rounded-[32px] p-3 sm:p-6 md:p-8 relative overflow-hidden">
+                    <div className="w-12 sm:w-24 md:w-32 h-4 sm:h-6 md:h-8 bg-charcoal/10 rounded-full mb-4 sm:mb-8 md:mb-12"></div>
+                    <div className="text-[32px] sm:text-[72px] md:text-[120px] font-display font-bold leading-none text-charcoal">+18.4%</div>
+                    <div className="absolute top-0 right-0 w-24 sm:w-48 md:w-64 h-24 sm:h-48 md:h-64 bg-electric-mint/20 rounded-full blur-[30px] sm:blur-[60px]"></div>
                   </div>
-                  <div className="flex-[1] bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col justify-end">
-                    <div className="w-full h-4 bg-white/10 rounded-full mb-4"></div>
-                    <div className="w-2/3 h-4 bg-white/20 rounded-full"></div>
+                  <div className="flex-[1] bg-white/5 border border-white/10 rounded-[16px] sm:rounded-[32px] p-3 sm:p-6 md:p-8 flex flex-col justify-end hidden sm:flex">
+                    <div className="w-full h-2 sm:h-3 md:h-4 bg-white/10 rounded-full mb-2 sm:mb-4"></div>
+                    <div className="w-2/3 h-2 sm:h-3 md:h-4 bg-white/20 rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -126,13 +126,13 @@ export default function LandingPage() {
         </section>
 
         {/* HOW SPARK WORKS (Pipeline) */}
-        <section id="architecture" className="py-32 bg-deep-black text-white relative overflow-hidden">
+        <section id="architecture" className="py-16 md:py-32 bg-deep-black text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-electric-mint/5 rounded-full blur-[150px] pointer-events-none"></div>
           
           <div className="max-w-[1440px] mx-auto px-6">
             <div className="text-center mb-24 relative z-10">
-              <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-6">How Spark Works</h2>
-              <p className="text-xl text-white/60 max-w-2xl mx-auto">The complete end-to-end intelligence pipeline, operating in milliseconds.</p>
+              <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-6">How Spark Works</h2>
+              <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto px-4">The complete end-to-end intelligence pipeline, operating in milliseconds.</p>
             </div>
 
             <div className="flex flex-col lg:flex-row items-center justify-between gap-4 relative z-10">
@@ -162,9 +162,9 @@ export default function LandingPage() {
         </section>
 
         {/* PLATFORM MODULES */}
-        <section id="platform" className="py-32 bg-warm-cream">
+        <section id="platform" className="py-16 md:py-32 bg-warm-cream">
           <div className="max-w-[1440px] mx-auto px-6">
-            <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-20 text-center text-deep-black">Platform Modules</h2>
+            <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-12 md:mb-20 text-center text-deep-black">Platform Modules</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
@@ -187,12 +187,12 @@ export default function LandingPage() {
         </section>
 
         {/* PRODUCT PREVIEW STRIP */}
-        <section className="py-32 bg-charcoal overflow-hidden relative">
+        <section className="py-16 md:py-32 bg-charcoal overflow-hidden relative">
           <div className="max-w-[1440px] mx-auto px-6 mb-16 relative z-10 text-center">
-            <h2 className="font-display text-[48px] font-bold tracking-tighter text-white">This is not a dashboard.<br/>This is an AI operating system.</h2>
+            <h2 className="font-display text-[28px] sm:text-[48px] font-bold tracking-tighter text-white">This is not a dashboard.<br/>This is an AI operating system.</h2>
           </div>
           
-          <div className="flex gap-8 overflow-x-auto pb-16 px-12 custom-scrollbar snap-x relative z-10">
+          <div className="flex gap-4 sm:gap-8 overflow-x-auto pb-8 sm:pb-16 px-4 sm:px-12 custom-scrollbar snap-x relative z-10">
             {/* Command Center */}
             <div className="w-[800px] shrink-0 snap-center group relative cursor-pointer">
               <div className="absolute top-4 left-4 bg-white text-deep-black px-4 py-2 rounded-full text-sm font-bold shadow-2xl z-20 transition-transform group-hover:-translate-y-2">Command Center</div>
@@ -384,9 +384,9 @@ export default function LandingPage() {
         </section>
 
         {/* USE CASES */}
-        <section id="solutions" className="py-32 bg-warm-cream">
+        <section id="solutions" className="py-16 md:py-32 bg-warm-cream">
           <div className="max-w-[1440px] mx-auto px-6">
-            <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-20 text-center text-deep-black">Enterprise Use Cases</h2>
+            <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-12 md:mb-20 text-center text-deep-black">Enterprise Use Cases</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[
@@ -395,7 +395,7 @@ export default function LandingPage() {
                 { title: 'Churn Prevention', pre: 'Low Engagement → High Value → Support Ticket', post: '[Suppressed marketing] → Sent retention gift.', color: 'bg-coral-pink' },
                 { title: 'Creative Fatigue', pre: 'Ignored 5 Emails → Active on App', post: '[Shifted budget to Push] → “We miss you!”', color: 'bg-sky-cyan' },
               ].map((uc, i) => (
-                <div key={i} className="bg-white rounded-[40px] p-10 border border-border-subtle shadow-soft hover:-translate-y-2 transition-transform">
+                <div key={i} className="bg-white rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 border border-border-subtle shadow-soft hover:-translate-y-2 transition-transform">
                   <div className="flex items-center gap-4 mb-8">
                     <div className={`w-4 h-8 rounded-full ${uc.color}`}></div>
                     <h3 className="font-display text-3xl font-bold text-deep-black">{uc.title}</h3>
@@ -419,10 +419,10 @@ export default function LandingPage() {
         </section>
 
         {/* CUSTOMERS */}
-        <section id="customers" className="py-32 bg-warm-cream">
+        <section id="customers" className="py-16 md:py-32 bg-warm-cream">
           <div className="max-w-[1440px] mx-auto px-6">
-            <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-6 text-center text-deep-black">Trusted by leading brands.</h2>
-            <p className="text-xl text-text-secondary mb-16 text-center max-w-2xl mx-auto">Revenue operations, CRM, and marketing teams at forward-looking brands power personalization with PeopleCloud Spark.</p>
+            <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-6 text-center text-deep-black">Trusted by leading brands.</h2>
+            <p className="text-lg sm:text-xl text-text-secondary mb-12 md:mb-16 text-center max-w-2xl mx-auto px-4">Revenue operations, CRM, and marketing teams at forward-looking brands power personalization with PeopleCloud Spark.</p>
 
             {/* Logo Strip */}
             <div className="flex flex-wrap justify-center gap-8 mb-24">
@@ -435,7 +435,7 @@ export default function LandingPage() {
 
             {/* Testimonial Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-deep-black text-white rounded-[40px] p-12 relative overflow-hidden">
+              <div className="bg-deep-black text-white rounded-[24px] sm:rounded-[40px] p-6 sm:p-12 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-electric-mint/10 rounded-full blur-[80px]"></div>
                 <div className="relative z-10">
                   <div className="flex gap-1 mb-8">
@@ -451,7 +451,7 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white rounded-[40px] p-12 border border-border-subtle shadow-soft">
+              <div className="bg-white rounded-[24px] sm:rounded-[40px] p-6 sm:p-12 border border-border-subtle shadow-soft">
                 <div className="flex gap-1 mb-8">
                   {[1,2,3,4,5].map(i => <div key={i} className="w-5 h-5 rounded-full bg-butter-yellow"></div>)}
                 </div>
@@ -467,7 +467,7 @@ export default function LandingPage() {
             </div>
 
             {/* Stats Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mt-12 md:mt-20">
               {[
                 { stat: '250M+', label: 'Profiles Resolved' },
                 { stat: '4.2B', label: 'Real-time Decisions' },
@@ -484,10 +484,10 @@ export default function LandingPage() {
         </section>
 
         {/* ENTERPRISE TRUST */}
-        <section className="py-32 bg-deep-black text-white relative overflow-hidden">
+        <section className="py-16 md:py-32 bg-deep-black text-white relative overflow-hidden">
           <div className="max-w-[1440px] mx-auto px-6 text-center relative z-10">
-            <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-6">Built for Enterprise Marketing.</h2>
-            <p className="text-xl text-white/60 mb-20 max-w-2xl mx-auto">Secure by design. Explainable by default.</p>
+            <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-6">Built for Enterprise Marketing.</h2>
+            <p className="text-lg sm:text-xl text-white/60 mb-12 md:mb-20 max-w-2xl mx-auto px-4">Secure by design. Explainable by default.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
               {[
@@ -509,9 +509,9 @@ export default function LandingPage() {
         </section>
 
         {/* PRICING PREVIEW */}
-        <section id="pricing" className="py-32 bg-warm-cream">
+        <section id="pricing" className="py-16 md:py-32 bg-warm-cream">
           <div className="max-w-[1440px] mx-auto px-6">
-            <h2 className="font-display text-[48px] md:text-[64px] font-bold tracking-tighter mb-20 text-center text-deep-black">SaaS Pricing Plans</h2>
+            <h2 className="font-display text-[32px] sm:text-[48px] md:text-[64px] font-bold tracking-tighter mb-12 md:mb-20 text-center text-deep-black">SaaS Pricing Plans</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
@@ -519,7 +519,7 @@ export default function LandingPage() {
                 { name: 'Growth', target: 'Scaling E-commerce', price: '$2,400', profiles: '5M', decisions: '100M', pop: true },
                 { name: 'Enterprise', target: 'Banks, Airlines, Retail', price: 'Custom', profiles: 'Unlimited', decisions: 'Unlimited' },
               ].map((plan, i) => (
-                <div key={i} className={`rounded-[40px] p-10 relative ${plan.pop ? 'bg-charcoal text-white shadow-2xl scale-105 z-10' : 'bg-white text-deep-black border border-border-subtle'}`}>
+                <div key={i} className={`rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 relative ${plan.pop ? 'bg-charcoal text-white shadow-2xl scale-100 sm:scale-105 z-10' : 'bg-white text-deep-black border border-border-subtle'}`}>
                   {plan.pop && <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-butter-yellow text-deep-black px-4 py-1 rounded-b-xl text-[10px] font-bold uppercase tracking-widest">Most Popular</div>}
                   <p className={`text-[10px] font-bold uppercase tracking-widest mb-4 ${plan.pop ? 'text-electric-mint' : 'text-text-secondary'}`}>{plan.target}</p>
                   <h3 className="font-display text-4xl font-bold mb-2">{plan.name}</h3>
@@ -549,14 +549,14 @@ export default function LandingPage() {
         {/* FINAL CTA */}
         <section className="py-40 bg-electric-mint text-deep-black text-center px-6 relative overflow-hidden">
           <div className="max-w-4xl mx-auto relative z-10">
-            <h2 className="font-display text-[64px] md:text-[96px] leading-[0.9] font-bold tracking-tighter mb-12">
+            <h2 className="font-display text-[36px] sm:text-[64px] md:text-[96px] leading-[0.9] font-bold tracking-tighter mb-8 sm:mb-12">
               Turn every signal into a personalized experience.
             </h2>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link href="/login" className="w-full sm:w-auto px-12 py-6 bg-deep-black hover:bg-charcoal transition-transform hover:scale-105 text-warm-cream font-bold rounded-full text-xl shadow-2xl">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-sm sm:max-w-none mx-auto">
+              <Link href="/login" className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 bg-deep-black hover:bg-charcoal transition-transform hover:scale-105 text-warm-cream font-bold rounded-full text-lg sm:text-xl shadow-2xl">
                 Enter Demo Workspace
               </Link>
-              <button onClick={() => setShowContactModal(true)} className="w-full sm:w-auto px-12 py-6 bg-white hover:bg-warm-cream transition-colors text-deep-black font-bold rounded-full text-xl shadow-soft">
+              <button onClick={() => setShowContactModal(true)} className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 bg-white hover:bg-warm-cream transition-colors text-deep-black font-bold rounded-full text-lg sm:text-xl shadow-soft">
                 Contact Sales
               </button>
             </div>
