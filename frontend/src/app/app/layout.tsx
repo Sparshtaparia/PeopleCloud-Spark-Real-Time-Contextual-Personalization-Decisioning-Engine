@@ -113,14 +113,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Close dropdowns on outside click
+  // Close dropdowns on outside click/touch
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (orgMenuRef.current && !orgMenuRef.current.contains(e.target as Node)) setShowOrgMenu(false)
-      if (wsMenuRef.current && !wsMenuRef.current.contains(e.target as Node)) setShowWsMenu(false)
+    const handleOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node
+      if (orgMenuRef.current && !orgMenuRef.current.contains(target)) setShowOrgMenu(false)
+      if (wsMenuRef.current && !wsMenuRef.current.contains(target)) setShowWsMenu(false)
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('mousedown', handleOutside)
+    document.addEventListener('touchstart', handleOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleOutside)
+      document.removeEventListener('touchstart', handleOutside)
+    }
   }, [])
 
   const handleDeleteOrg = async () => {
@@ -176,11 +181,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full bg-warm-cream">
       
-      {/* Mobile Hamburger */}
-      <button onClick={() => setShowMobileNav(true)} className="lg:hidden fixed top-4 left-3 z-50 w-9 h-9 bg-deep-black rounded-xl flex items-center justify-center text-white shadow-2xl">
-        <Menu size={16} />
-      </button>
-
       {/* AppRail: Floating deep black vertical navigation */}
       <div className="hidden lg:flex w-[88px] h-screen bg-deep-black text-white flex-col items-center py-6 fixed left-0 top-0 z-50">
         
@@ -244,6 +244,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           
           <div className="flex items-center gap-2 lg:gap-4 min-w-0">
 
+            {/* Mobile Hamburger */}
+            <button onClick={() => setShowMobileNav(true)} className="lg:hidden w-9 h-9 bg-deep-black rounded-xl flex items-center justify-center text-white shadow-2xl shrink-0">
+              <Menu size={16} />
+            </button>
+
             {/* Org Dropdown */}
             <div className="relative" ref={orgMenuRef}>
               <button
@@ -252,12 +257,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showOrgMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-primary hover:border-deep-black hover:shadow-md shadow-soft'}`}
               >
                 <Building2 size={12} className={`lg:w-[14px] lg:h-[14px] ${showOrgMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
-                <span className="font-display font-bold text-xs lg:text-sm tracking-tight max-w-[80px] lg:max-w-[140px] truncate">{currentOrg.name}</span>
+                <span className="font-display font-bold text-xs lg:text-sm tracking-tight max-w-[100px] lg:max-w-[140px] truncate">{currentOrg.name}</span>
                 <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showOrgMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 
               {showOrgMenu && (
-                <div className="absolute top-full mt-2 left-0 w-72 bg-white rounded-2xl shadow-2xl border border-border-subtle overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute top-full mt-2 left-0 sm:left-auto w-[calc(100vw-2rem)] sm:w-72 bg-white rounded-2xl shadow-2xl border border-border-subtle overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="px-4 pt-4 pb-2 border-b border-border-subtle">
                     <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Switch Organization</p>
                   </div>
@@ -339,12 +344,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 className={`flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl lg:rounded-2xl border transition-all duration-200 group ${showWsMenu ? 'bg-deep-black text-white border-deep-black shadow-xl' : 'bg-white border-border-subtle text-text-secondary hover:border-deep-black hover:text-text-primary hover:shadow-md shadow-soft'}`}
               >
                 <Layers size={12} className={`lg:w-[14px] lg:h-[14px] ${showWsMenu ? 'text-electric-mint' : 'text-text-secondary group-hover:text-deep-black'}`} />
-                <span className="font-display text-xs lg:text-sm font-semibold max-w-[80px] lg:max-w-[160px] truncate">{currentWorkspace.name}</span>
+                <span className="font-display text-xs lg:text-sm font-semibold max-w-[100px] lg:max-w-[160px] truncate">{currentWorkspace.name}</span>
                 <ChevronDown size={11} className={`lg:w-[13px] lg:h-[13px] transition-transform duration-200 shrink-0 ${showWsMenu ? 'rotate-180 text-electric-mint' : 'text-text-secondary'}`} />
               </button>
 
               {showWsMenu && (
-                <div className="absolute top-full mt-2 left-0 w-72 bg-white rounded-2xl shadow-2xl border border-border-subtle overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute top-full mt-2 left-0 sm:left-auto w-[calc(100vw-2rem)] sm:w-72 bg-white rounded-2xl shadow-2xl border border-border-subtle overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="px-4 pt-4 pb-2 border-b border-border-subtle">
                     <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Workspaces · {currentOrg.name}</p>
                   </div>

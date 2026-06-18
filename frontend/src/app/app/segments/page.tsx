@@ -144,22 +144,22 @@ export default function Segments() {
         <>
           <div className="fixed inset-0 bg-deep-black/20 backdrop-blur-sm z-[90]" onClick={() => setSelectedSegment(null)}></div>
           <div className="fixed top-0 right-0 bottom-0 w-full max-w-[600px] bg-white z-[100] shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
-            <div className="p-8 border-b border-border-subtle flex justify-between items-center bg-warm-cream">
-              <h2 className="font-display text-3xl font-bold text-deep-black">{selectedSegment.name}</h2>
+            <div className="p-6 lg:p-8 border-b border-border-subtle flex justify-between items-center bg-warm-cream">
+              <h2 className="font-display text-xl lg:text-3xl font-bold text-deep-black">{selectedSegment.name}</h2>
               <button onClick={() => setSelectedSegment(null)} className="w-10 h-10 rounded-full bg-white border border-border-subtle flex items-center justify-center hover:bg-deep-black hover:text-white transition-colors">
                 <X size={20} />
               </button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-8 space-y-8">
+            <div className="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-6 bg-charcoal text-white rounded-3xl">
+                <div className="p-4 lg:p-6 bg-charcoal text-white rounded-3xl">
                   <p className="text-[10px] uppercase font-bold tracking-widest text-white/50 mb-2">Audience Size</p>
-                  <p className="font-display text-4xl font-bold">{selectedSegment.audienceSize?.toLocaleString() || "1,200"}</p>
+                  <p className="font-display text-2xl lg:text-4xl font-bold">{selectedSegment.audienceSize?.toLocaleString() || "1,200"}</p>
                 </div>
-                <div className="p-6 bg-warm-cream text-deep-black rounded-3xl border border-border-subtle">
+                <div className="p-4 lg:p-6 bg-warm-cream text-deep-black rounded-3xl border border-border-subtle">
                   <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary mb-2">Conv. Probability</p>
-                  <p className="font-display text-4xl font-bold">{formatPercentDecimal(selectedSegment.convProb || 0)}</p>
+                  <p className="font-display text-2xl lg:text-4xl font-bold">{formatPercentDecimal(selectedSegment.convProb || 0)}</p>
                 </div>
               </div>
 
@@ -175,18 +175,18 @@ export default function Segments() {
               </div>
             </div>
 
-            <div className="p-8 border-t border-border-subtle bg-white flex gap-4">
+            <div className="p-6 lg:p-8 border-t border-border-subtle bg-white flex flex-col sm:flex-row gap-3">
               <button 
                 onClick={() => router.push(`/app/campaigns?segmentId=${selectedSegment.id}`)}
-                className="flex-1 py-4 bg-white border-2 border-deep-black text-deep-black rounded-xl font-bold hover:bg-deep-black hover:text-white transition-colors flex items-center justify-center gap-2"
+                className="flex-1 py-3 lg:py-4 bg-white border-2 border-deep-black text-deep-black rounded-xl font-bold hover:bg-deep-black hover:text-white transition-colors flex items-center justify-center gap-2 text-sm lg:text-base"
               >
-                <Play size={18} /> Create Campaign
+                <Play size={16} /> Create Campaign
               </button>
               <button 
                 onClick={() => router.push(`/app/creative-studio?segmentId=${selectedSegment.id}`)}
-                className="flex-1 py-4 bg-electric-mint text-deep-black rounded-xl font-bold shadow-glow-mint flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors"
+                className="flex-1 py-3 lg:py-4 bg-electric-mint text-deep-black rounded-xl font-bold shadow-glow-mint flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors text-sm lg:text-base"
               >
-                <ImageIcon size={18} /> Generate Creative
+                <ImageIcon size={16} /> Generate Creative
               </button>
             </div>
           </div>

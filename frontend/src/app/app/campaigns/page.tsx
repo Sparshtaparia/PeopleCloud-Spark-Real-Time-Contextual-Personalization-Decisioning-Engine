@@ -151,38 +151,38 @@ export default function Campaigns() {
                No campaigns found in this workspace. Create one!
              </div>
           ) : filteredCampaigns.map((c, i) => (
-            <div key={c.id} className={`bg-white rounded-[32px] p-8 border border-border-subtle shadow-soft group hover:border-deep-black transition-colors ${showCreate && i > 0 ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
-              <div className="flex justify-between items-start mb-6">
-                <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 ${
+            <div key={c.id} className={`bg-white rounded-[32px] p-6 lg:p-8 border border-border-subtle shadow-soft group hover:border-deep-black transition-colors ${showCreate && i > 0 ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
+              <div className="flex justify-between items-start mb-4 lg:mb-6">
+                <div className={`px-2.5 lg:px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 ${
                   c.status === 'learning' ? 'bg-butter-yellow text-deep-black' : 
                   c.status === 'live' ? 'bg-electric-mint/20 text-emerald-800' : 
                   c.status === 'review' ? 'bg-coral-pink/20 text-coral-pink' :
                   c.status === 'approved' ? 'bg-sky-cyan/20 text-sky-cyan' :
                   'bg-warm-cream text-text-secondary'
                 }`}>
-                  {c.status === 'learning' && <Zap size={12} />}
-                  {c.status === 'live' && <Play size={12} />}
-                  {c.status === 'approved' && <CheckCircle size={12} />}
+                  {c.status === 'learning' && <Zap size={10} />}
+                  {c.status === 'live' && <Play size={10} />}
+                  {c.status === 'approved' && <CheckCircle size={10} />}
                   {c.status}
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-1">Lift</p>
-                  <p className={`font-display text-2xl font-bold ${c.status === 'draft' || c.status === 'review' || c.status === 'approved' ? 'text-text-secondary' : 'text-electric-mint'}`}>
+                  <p className={`font-display text-xl lg:text-2xl font-bold ${c.status === 'draft' || c.status === 'review' || c.status === 'approved' ? 'text-text-secondary' : 'text-electric-mint'}`}>
                     {c.lift && c.lift !== '-' ? `+${Number(String(c.lift).replace(/[+%]/g, '')).toFixed(1)}%` : '-'}
                   </p>
                 </div>
               </div>
 
-              <h3 className="font-display text-2xl font-bold text-deep-black mb-6">{c.name}</h3>
+              <h3 className="font-display text-xl lg:text-2xl font-bold text-deep-black mb-4 lg:mb-6">{c.name}</h3>
 
-              <div className="grid grid-cols-2 gap-4 border-t border-border-subtle pt-6 mb-6">
+              <div className="grid grid-cols-2 gap-3 lg:gap-4 border-t border-border-subtle pt-4 lg:pt-6 mb-4 lg:mb-6">
                 <div>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary flex items-center gap-1 mb-1"><Target size={12}/> Audience</p>
-                  <p className="text-sm font-bold text-deep-black truncate">{c.segment?.name || 'All Users'}</p>
+                  <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary flex items-center gap-1 mb-1"><Target size={10}/> Audience</p>
+                  <p className="text-xs lg:text-sm font-bold text-deep-black truncate">{c.segment?.name || 'All Users'}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary flex items-center gap-1 mb-1"><Megaphone size={12}/> Objective</p>
-                  <p className="text-sm font-bold text-deep-black">{c.objective}</p>
+                  <p className="text-[10px] uppercase font-bold tracking-widest text-text-secondary flex items-center gap-1 mb-1"><Megaphone size={10}/> Objective</p>
+                  <p className="text-xs lg:text-sm font-bold text-deep-black">{c.objective}</p>
                 </div>
               </div>
               
@@ -238,19 +238,19 @@ export default function Campaigns() {
 
         {/* Campaign Builder Slider */}
         {showCreate && (
-          <form onSubmit={handleCreate} className="flex-1 bg-white rounded-[40px] border border-border-subtle shadow-2xl p-10 flex flex-col animate-in slide-in-from-right-16 duration-500 overflow-y-auto custom-scrollbar relative">
-            <div className="absolute top-0 right-0 bg-butter-yellow px-6 py-2 rounded-bl-[24px] text-xs font-bold uppercase tracking-widest text-deep-black">
+          <form onSubmit={handleCreate} className="flex-1 bg-white rounded-[32px] lg:rounded-[40px] border border-border-subtle shadow-2xl p-6 lg:p-10 flex flex-col animate-in slide-in-from-right-16 duration-500 overflow-y-auto custom-scrollbar relative">
+            <div className="absolute top-0 right-0 bg-butter-yellow px-4 lg:px-6 py-1.5 lg:py-2 rounded-bl-[24px] text-[10px] lg:text-xs font-bold uppercase tracking-widest text-deep-black">
               Campaign Builder
             </div>
             
-            <h2 className="font-display text-3xl font-bold mb-8">Create Campaign</h2>
+            <h2 className="font-display text-2xl lg:text-3xl font-bold mb-6 lg:mb-8">Create Campaign</h2>
             
-            <div className="space-y-8 flex-1">
+            <div className="space-y-6 lg:space-y-8 flex-1">
               
-              <div className="grid grid-cols-2 gap-6">
-                <div className="col-span-2">
-                  <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest mb-2">Campaign Name</label>
-                  <input required name="name" type="text" placeholder="e.g. Summer Retention Push" className="w-full px-5 py-4 bg-warm-cream border border-border-subtle rounded-2xl focus:border-deep-black outline-none transition-colors font-bold text-deep-black text-lg" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="md:col-span-2">
+                  <label className="block text-[10px] lg:text-xs font-bold text-text-secondary uppercase tracking-widest mb-2">Campaign Name</label>
+                  <input required name="name" type="text" placeholder="e.g. Summer Retention Push" className="w-full px-4 lg:px-5 py-3 lg:py-4 bg-warm-cream border border-border-subtle rounded-2xl focus:border-deep-black outline-none transition-colors font-bold text-deep-black text-base lg:text-lg" />
                 </div>
                 
                 <div>

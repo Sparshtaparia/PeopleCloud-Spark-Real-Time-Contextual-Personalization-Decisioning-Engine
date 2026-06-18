@@ -147,13 +147,13 @@ export default function Customer360() {
             
             <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-center">
               {/* Identity Ring */}
-              <div className="relative shrink-0 w-40 h-40">
+              <div className="relative shrink-0 w-28 lg:w-40 h-28 lg:h-40">
                 <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
                   <circle cx="50" cy="50" r="45" fill="none" stroke="var(--color-border-subtle)" strokeWidth="8" />
                   <circle cx="50" cy="50" r="45" fill="none" stroke="var(--color-electric-mint)" strokeWidth="8" strokeDasharray="283" strokeDashoffset={283 - (283 * Math.round((profile.identityConfidence || 0) * 100)) / 100} className="transition-all duration-1000 ease-out" />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="font-display text-4xl font-bold text-deep-black">{Math.round((profile.identityConfidence || 0) * 100)}%</span>
+                  <span className="font-display text-2xl lg:text-4xl font-bold text-deep-black">{Math.round((profile.identityConfidence || 0) * 100)}%</span>
                   <span className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Confidence</span>
                 </div>
               </div>

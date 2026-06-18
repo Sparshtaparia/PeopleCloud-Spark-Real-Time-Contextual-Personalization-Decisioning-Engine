@@ -108,30 +108,30 @@ export default function CreativeStudio() {
   }
 
   return (
-    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 h-[calc(100vh-80px)] flex flex-col">
+    <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 min-h-[calc(100vh-64px)] lg:min-h-[calc(100vh-80px)] flex flex-col">
       
-      <div className="flex justify-between items-end mb-8 shrink-0">
+      <div className="flex justify-between items-end mb-6 lg:mb-8 shrink-0">
         <div>
-          <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">AI Creative Studio</h1>
-          <p className="text-text-secondary font-medium">Generate brand-safe, hyper-personalized messaging at scale.</p>
+          <h1 className="font-display text-title-lg lg:text-title-xl font-bold tracking-tight mb-2 text-text-primary">AI Creative Studio</h1>
+          <p className="text-sm lg:text-base text-text-secondary font-medium">Generate brand-safe, hyper-personalized messaging at scale.</p>
         </div>
       </div>
 
-      <div className="flex-1 flex gap-8 overflow-hidden pb-4">
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:gap-8 overflow-visible lg:overflow-hidden pb-4">
         
         {/* Left Col: Prompt Builder */}
-        <div className="w-full lg:w-[380px] bg-charcoal text-white rounded-[32px] p-8 shadow-2xl flex flex-col lg:shrink-0 border border-border-inverse relative overflow-hidden">
+        <div className="w-full lg:w-[380px] bg-charcoal text-white rounded-[32px] p-6 lg:p-8 shadow-2xl flex flex-col lg:shrink-0 border border-border-inverse relative overflow-hidden">
           <div className="absolute top-0 right-0 bg-butter-yellow text-deep-black px-4 py-1 rounded-bl-2xl text-[10px] font-bold uppercase tracking-widest">
             Prompt Builder
           </div>
 
-          <h3 className="font-display text-2xl font-bold mb-8 flex items-center gap-3">
-            <Settings2 className="text-butter-yellow" /> Parameters
+          <h3 className="font-display text-xl lg:text-2xl font-bold mb-6 lg:mb-8 flex items-center gap-3">
+            <Settings2 className="text-butter-yellow" size={20} /> Parameters
           </h3>
           
-          <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
+          <div className="space-y-5 lg:space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
             <div className="relative">
-              <label className="block text-[10px] font-bold text-white/50 uppercase tracking-widest mb-3">Select Campaign</label>
+              <label className="block text-[10px] font-bold text-white/50 uppercase tracking-widest mb-2 lg:mb-3">Select Campaign</label>
               <div className="relative">
                 <select 
                   className="w-full bg-charcoal border border-white/10 hover:border-white/30 rounded-xl px-4 py-3 pr-10 text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-butter-yellow/50 transition-all appearance-none cursor-pointer shadow-soft"
@@ -232,11 +232,11 @@ export default function CreativeStudio() {
         </div>
 
         {/* Center Col: Output Canvas */}
-        <div className="flex-1 bg-white rounded-[32px] border border-border-subtle shadow-soft p-8 overflow-y-auto custom-scrollbar relative flex flex-col">
+        <div className="flex-1 bg-white rounded-[32px] border border-border-subtle shadow-soft p-6 lg:p-8 overflow-y-auto custom-scrollbar relative flex flex-col">
           
-          <div className="flex justify-between items-center mb-8 pb-6 border-b border-border-subtle">
-            <h3 className="font-display text-2xl font-bold flex items-center gap-3 text-deep-black">
-              <Eye className="text-text-secondary" /> Variant Canvas
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-border-subtle gap-3">
+            <h3 className="font-display text-xl lg:text-2xl font-bold flex items-center gap-3 text-deep-black">
+              <Eye className="text-text-secondary" size={20} /> Variant Canvas
             </h3>
             {explanation && (
               <div className="flex items-center gap-3 px-4 py-2 bg-electric-mint/10 border border-electric-mint/20 rounded-full">
@@ -267,7 +267,7 @@ export default function CreativeStudio() {
           {variants.length > 0 && !loading && (
             <div className="flex-1 flex flex-col gap-6">
               {variants.filter(v => v.status !== 'rejected').map((v, idx) => (
-                <div key={v.id} className={`bg-warm-cream rounded-3xl p-8 border ${v.status === 'approved' ? 'border-electric-mint shadow-glow-mint' : v.status === 'needs_edit' ? 'border-coral-pink bg-coral-pink/5' : 'border-border-subtle'} relative overflow-hidden group hover:border-deep-black transition-colors animate-in fade-in slide-in-from-bottom-8`} style={{animationDelay: `${idx * 150}ms`}}>
+                <div key={v.id} className={`bg-warm-cream rounded-3xl p-6 lg:p-8 border ${v.status === 'approved' ? 'border-electric-mint shadow-glow-mint' : v.status === 'needs_edit' ? 'border-coral-pink bg-coral-pink/5' : 'border-border-subtle'} relative overflow-hidden group hover:border-deep-black transition-colors animate-in fade-in slide-in-from-bottom-8`} style={{animationDelay: `${idx * 150}ms`}}>
                   {v.championReason && v.status !== 'approved' && (
                     <div className="absolute top-0 right-0 bg-butter-yellow text-deep-black px-4 py-1 rounded-bl-xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-end group">
                       <span>Champion Prediction</span>
@@ -282,12 +282,12 @@ export default function CreativeStudio() {
                     </div>
                   )}
                   
-                  <div className="flex items-start gap-6">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-display text-xl font-bold shrink-0 ${v.championReason ? 'bg-deep-black text-warm-cream' : 'bg-white border border-border-subtle text-deep-black'}`}>
+                  <div className="flex flex-col sm:flex-row items-start gap-4 lg:gap-6">
+                    <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-2xl flex items-center justify-center font-display text-lg lg:text-xl font-bold shrink-0 ${v.championReason ? 'bg-deep-black text-warm-cream' : 'bg-white border border-border-subtle text-deep-black'}`}>
                       {String.fromCharCode(65 + idx)}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex gap-2 items-center mb-3">
+                    <div className="flex-1 min-w-0 w-full">
+                      <div className="flex flex-wrap gap-2 items-center mb-3">
                         <span className="px-3 py-1 bg-white border border-border-subtle rounded-full text-[10px] font-bold uppercase tracking-widest text-text-secondary">
                           {v.strategy ? v.strategy.replace(/_/g, ' ') : "Conversion"}
                         </span>
@@ -309,50 +309,50 @@ export default function CreativeStudio() {
                         </p>
                       )}
 
-                      <p className="font-display text-2xl font-bold leading-snug text-deep-black mb-2 pr-12">
+                      <p className="font-display text-xl lg:text-2xl font-bold leading-snug text-deep-black mb-2 pr-8 lg:pr-12">
                         {v.headline}
                       </p>
-                      <p className="text-text-secondary font-medium mb-3">
+                      <p className="text-sm lg:text-base text-text-secondary font-medium mb-3">
                         {v.body}
                       </p>
-                      <p className="text-sm font-bold text-deep-black mb-6 flex items-center gap-2">
-                        <span className="w-4 h-4 rounded-full bg-butter-yellow/20 flex items-center justify-center"><Play size={8} className="text-butter-yellow" /></span>
+                      <p className="text-xs lg:text-sm font-bold text-deep-black mb-4 lg:mb-6 flex items-center gap-2">
+                        <span className="w-3.5 h-3.5 lg:w-4 lg:h-4 rounded-full bg-butter-yellow/20 flex items-center justify-center"><Play size={7} className="text-butter-yellow" /></span>
                         {v.cta}
                       </p>
                       
-                      <div className="flex items-center gap-6 border-t border-border-subtle pt-6 flex-wrap">
+                      <div className="flex items-center gap-3 lg:gap-6 border-t border-border-subtle pt-4 lg:pt-6 flex-wrap">
                         <div>
-                          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-1">Predicted CTR</p>
-                          <p className="font-display text-2xl font-bold text-electric-mint">{(Number(v.predictedCtr) * 100).toFixed(1)}%</p>
+                          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-1">CTR</p>
+                          <p className="font-display text-lg lg:text-2xl font-bold text-electric-mint">{(Number(v.predictedCtr) * 100).toFixed(1)}%</p>
                         </div>
-                        <div className="w-px h-10 bg-border-subtle"></div>
+                        <div className="w-px h-8 lg:h-10 bg-border-subtle"></div>
                         <div>
-                          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-1">Brand Safety</p>
-                          <p className="text-sm font-bold text-deep-black">{(Number(v.brandSafetyScore) * 100).toFixed(0)}%</p>
+                          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-1">Safety</p>
+                          <p className="text-xs lg:text-sm font-bold text-deep-black">{(Number(v.brandSafetyScore) * 100).toFixed(0)}%</p>
                         </div>
-                        <div className="w-px h-10 bg-border-subtle"></div>
+                        <div className="w-px h-8 lg:h-10 bg-border-subtle"></div>
                         <div>
                           <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-1">Compliance</p>
-                          <p className={`text-sm font-bold ${v.status === 'needs_edit' ? 'text-coral-pink' : 'text-deep-black'}`}>{(Number(v.complianceScore) * 100).toFixed(0)}%</p>
+                          <p className={`text-xs lg:text-sm font-bold ${v.status === 'needs_edit' ? 'text-coral-pink' : 'text-deep-black'}`}>{(Number(v.complianceScore) * 100).toFixed(0)}%</p>
                         </div>
-                        <div className="ml-auto flex gap-2">
-                          <button onClick={() => handleRegenerate(v.id)} disabled={!can('generate_creative')} className="px-4 py-2 bg-white text-text-secondary border border-border-subtle hover:bg-warm-cream rounded-xl font-bold text-xs transition-colors shadow-soft disabled:opacity-50">
+                        <div className="ml-auto flex gap-1.5 lg:gap-2 flex-wrap">
+                          <button onClick={() => handleRegenerate(v.id)} disabled={!can('generate_creative')} className="px-3 lg:px-4 py-1.5 lg:py-2 bg-white text-text-secondary border border-border-subtle hover:bg-warm-cream rounded-xl font-bold text-[10px] lg:text-xs transition-colors shadow-soft disabled:opacity-50">
                             Regenerate
                           </button>
-                          <button onClick={() => alert("Preview opened")} className="px-4 py-2 bg-white text-text-secondary border border-border-subtle hover:bg-warm-cream rounded-xl font-bold text-xs transition-colors shadow-soft">
+                          <button onClick={() => alert("Preview opened")} className="px-3 lg:px-4 py-1.5 lg:py-2 bg-white text-text-secondary border border-border-subtle hover:bg-warm-cream rounded-xl font-bold text-[10px] lg:text-xs transition-colors shadow-soft">
                             Preview
                           </button>
-                          <button onClick={() => handleReject(v.id)} disabled={!can('approve_creative')} className="px-4 py-2 bg-white text-coral-pink border border-coral-pink/20 hover:bg-coral-pink/10 rounded-xl font-bold text-xs transition-colors shadow-soft disabled:opacity-50">
+                          <button onClick={() => handleReject(v.id)} disabled={!can('approve_creative')} className="px-3 lg:px-4 py-1.5 lg:py-2 bg-white text-coral-pink border border-coral-pink/20 hover:bg-coral-pink/10 rounded-xl font-bold text-[10px] lg:text-xs transition-colors shadow-soft disabled:opacity-50">
                             Reject
                           </button>
                           {v.status !== 'approved' && (
-                            <button onClick={() => handleApprove(v.id)} disabled={!can('approve_creative') || v.status === 'needs_edit'} className="px-6 py-2 bg-deep-black text-warm-cream rounded-xl font-bold text-sm hover:bg-charcoal transition-colors flex items-center gap-2 shadow-soft disabled:opacity-50 disabled:cursor-not-allowed">
-                              <ShieldCheck size={16} /> Approve
+                            <button onClick={() => handleApprove(v.id)} disabled={!can('approve_creative') || v.status === 'needs_edit'} className="px-4 lg:px-6 py-1.5 lg:py-2 bg-deep-black text-warm-cream rounded-xl font-bold text-xs lg:text-sm hover:bg-charcoal transition-colors flex items-center gap-1.5 lg:gap-2 shadow-soft disabled:opacity-50 disabled:cursor-not-allowed">
+                              <ShieldCheck size={14} /> Approve
                             </button>
                           )}
                           {v.status === 'approved' && (
-                            <button onClick={() => alert("Experiment configured")} className="px-6 py-2 bg-electric-mint text-deep-black rounded-xl font-bold text-sm hover:brightness-105 transition-colors flex items-center gap-2 shadow-soft">
-                              <Play size={16} /> Use in Experiment
+                            <button onClick={() => alert("Experiment configured")} className="px-4 lg:px-6 py-1.5 lg:py-2 bg-electric-mint text-deep-black rounded-xl font-bold text-xs lg:text-sm hover:brightness-105 transition-colors flex items-center gap-1.5 lg:gap-2 shadow-soft">
+                              <Play size={14} /> Use
                             </button>
                           )}
                         </div>
