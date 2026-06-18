@@ -1,14 +1,12 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requirePermission } from "@/lib/rbac/require-permission"
 import { requireAuth, createAuditLog, incrementUsage } from "../server-utils"
 import { revalidatePath } from "next/cache"
 import { getGeminiClient } from "@/lib/ai/gemini-client"
 
 import { generateCreativeVariants as aiGenerate } from "@/lib/ai/creative-generator"
-
-const prisma = new PrismaClient()
 
 export async function getCreativeVariants(campaignId: string, channelFilter?: string) {
   const user = await requireAuth()

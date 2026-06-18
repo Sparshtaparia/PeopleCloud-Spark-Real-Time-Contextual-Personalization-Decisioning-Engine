@@ -1,10 +1,8 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requirePermission } from "@/lib/rbac/require-permission"
 import { requireAuth } from "../server-utils"
-
-const prisma = new PrismaClient()
 
 import { dashboardService } from "../services/dashboard-metrics.service"
 

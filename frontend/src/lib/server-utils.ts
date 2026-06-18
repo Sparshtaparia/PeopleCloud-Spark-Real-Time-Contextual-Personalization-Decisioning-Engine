@@ -1,9 +1,7 @@
 import { getServerSession } from "next-auth"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { revalidatePath } from "next/cache"
-
-const prisma = new PrismaClient()
 
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions)

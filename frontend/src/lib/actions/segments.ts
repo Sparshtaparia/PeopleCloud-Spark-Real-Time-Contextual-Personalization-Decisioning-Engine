@@ -1,10 +1,8 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
 import { createNotification } from "./notifications"
-
-const prisma = new PrismaClient()
 
 const SEGMENT_LIFECYCLE_MAP: Record<string, string[]> = {
   "High Intent Cart Abandoners": ["cart_abandoner"],

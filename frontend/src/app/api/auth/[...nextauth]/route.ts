@@ -1,7 +1,7 @@
 import NextAuth, { Session, User } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 
 declare module "next-auth" {
   interface Session {
@@ -15,8 +15,6 @@ declare module "next-auth" {
     }
   }
 }
-
-const prisma = new PrismaClient()
 
 export const authOptions: import("next-auth").AuthOptions = {
   providers: [

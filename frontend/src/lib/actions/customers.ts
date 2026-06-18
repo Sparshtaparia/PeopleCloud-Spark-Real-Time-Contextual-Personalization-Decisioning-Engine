@@ -1,10 +1,8 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
 import { getGeminiClient } from "@/lib/ai/gemini-client"
-
-const prisma = new PrismaClient()
 
 export async function getCustomers(workspaceId: string) {
   const user = await requireAuth()

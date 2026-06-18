@@ -1,9 +1,7 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requireAuth, requirePermission, createAuditLog } from "../server-utils"
-
-const prisma = new PrismaClient()
 
 export async function deleteOrganizationAction(input: {
   organizationId: string

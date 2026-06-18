@@ -1,12 +1,10 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requireAuth, createAuditLog, incrementUsage } from "../server-utils"
 import { revalidatePath } from "next/cache"
 import * as XLSX from "xlsx"
 import Papa from "papaparse"
-
-const prisma = new PrismaClient()
 
 export interface ParsedFileResult {
   headers: string[]

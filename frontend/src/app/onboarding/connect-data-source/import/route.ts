@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-
-const prisma = new PrismaClient()
 
 const KNOWN_EVENT_TYPES = [
   "page_view", "product_view", "search", "add_to_cart", "purchase",

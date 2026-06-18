@@ -1,9 +1,7 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
-
-const prisma = new PrismaClient()
 
 export async function getUsage(organizationId: string) {
   const user = await requireAuth()

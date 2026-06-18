@@ -1,11 +1,9 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { requirePermission } from "@/lib/rbac/require-permission"
 import { requireAuth, createAuditLog } from "../server-utils"
 import { revalidatePath } from "next/cache"
-
-const prisma = new PrismaClient()
 
 export async function getSettings(organizationId: string) {
   const user = await requireAuth()
