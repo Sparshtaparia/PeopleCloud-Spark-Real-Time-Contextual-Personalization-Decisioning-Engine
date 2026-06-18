@@ -2,14 +2,18 @@
 import { usePermissions } from '@/hooks/use-permissions'
 import { AccessDenied } from '@/components/rbac/AccessDenied'
 
-import React, { useState, useEffect } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ShieldCheck, UserPlus, Megaphone, Zap, GitMerge, Key, AlertTriangle, Database, XCircle } from 'lucide-react'
 import { useAppStore } from '@/lib/store'
 import { getAuditLogs } from '@/lib/actions/audit'
 import { formatDateTime } from '@/lib/formatters'
 
-export default function AuditLogs() {
+export default function Page() {
+  return <Suspense fallback={<div className="px-12 py-8 animate-pulse"><div className="h-[400px] bg-white/50 rounded-3xl"></div></div>}><AuditLogs /></Suspense>
+}
+
+function AuditLogs() {
   const { can } = usePermissions()
   const searchParams = useSearchParams()
   const router = useRouter()

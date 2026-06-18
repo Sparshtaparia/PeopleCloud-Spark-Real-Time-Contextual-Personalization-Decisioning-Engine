@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useCallback } from 'react'
+import React, { Suspense, useState, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowRight, ArrowLeft, Upload, CheckCircle2, AlertTriangle, Loader2, Download, FileSpreadsheet } from 'lucide-react'
 import * as XLSX from 'xlsx'
@@ -21,7 +21,11 @@ const SPARK_FIELDS = [
 
 type Step = "upload" | "preview" | "mapping" | "validate" | "importing" | "complete"
 
-export default function ConnectDataSourcePage() {
+export default function Page() {
+  return <Suspense fallback={<div className="px-12 py-8 animate-pulse"><div className="h-[600px] bg-white/50 rounded-3xl"></div></div>}><ConnectDataSourcePage /></Suspense>
+}
+
+function ConnectDataSourcePage() {
   const router = useRouter()
   const params = useSearchParams()
   const orgId = params.get("orgId") || ""
