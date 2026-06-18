@@ -58,22 +58,10 @@ export class GeminiClient {
       throw new GeminiError("Gemini API key not configured or mock key detected", "UNAVAILABLE")
     }
 
-    let lastError: Error | null = null
-
-    for (let attempt = 0; attempt <= this.config.maxRetries!; attempt++) {
-      try {
-        const response = await this.callAPI(prompt)
-        const parsed = this.parseResponse(response, schema)
-        return parsed
-      } catch (err) {
-        lastError = err instanceof Error ? err : new Error(String(err))
-        if (attempt < this.config.maxRetries!) {
-          await sleep(1000 * (attempt + 1))
-        }
-      }
-    }
-
-    throw lastError || new GeminiError("Creative generation failed after retries", "GENERATION_FAILED")
+    return this.withRetry(async () => {
+      const response = await this.callAPI(prompt)
+      return this.parseResponse(response, schema)
+    }, "Creative generation")
   }
 
   async generateExperimentSummary(
@@ -83,8 +71,10 @@ export class GeminiClient {
       throw new GeminiError("Gemini API key not configured", "UNAVAILABLE")
     }
 
-    const response = await this.callAPI(prompt)
-    return this.parseResponse(response, ExperimentSummarySchema)
+    return this.withRetry(async () => {
+      const response = await this.callAPI(prompt)
+      return this.parseResponse(response, ExperimentSummarySchema)
+    }, "Experiment summary")
   }
 
   async generateNaturalLanguageExplanation(
@@ -96,23 +86,15 @@ export class GeminiClient {
 
     const prompt = `You are a marketing analytics explainer. Explain the following in plain language for a non-technical marketer. Keep it under 3 sentences:\n\n${context}`
 
-    for (let attempt = 0; attempt <= 1; attempt++) {
-      try {
-        const response = await this.callAPI(prompt)
-        const cleaned = response
-          .replace(/```json\s*/gi, "")
-          .replace(/```\s*/g, "")
-          .trim()
-        if (cleaned.length <= 10) throw new GeminiError("Response too short", "EMPTY_RESPONSE")
-        return cleaned
-      } catch (err) {
-        const isRateLimit = err instanceof GeminiError && err.code === "RATE_LIMITED"
-        if (isRateLimit) throw err
-        if (attempt < 1) await sleep(1000)
-      }
-    }
-
-    throw new GeminiError("Explanation generation failed", "GENERATION_FAILED")
+    return this.withRetry(async () => {
+      const response = await this.callAPI(prompt)
+      const cleaned = response
+        .replace(/```json\s*/gi, "")
+        .replace(/```\s*/g, "")
+        .trim()
+      if (cleaned.length <= 10) throw new GeminiError("Response too short", "EMPTY_RESPONSE")
+      return cleaned
+    }, "Explanation generation")
   }
 
   private async callAPI(prompt: string): Promise<string> {
@@ -180,6 +162,27 @@ export class GeminiClient {
     }
 
     return result.data
+  }
+
+  private async withRetry<T>(fn: () => Promise<T>, label: string): Promise<T> {
+    const maxAttempts = 4
+    let lastError: Error | null = null
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        return await fn()
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err))
+        if (attempt < maxAttempts - 1) {
+          const delay = Math.min(1000 * Math.pow(2, attempt), 8000)
+          console.error(`[Gemini] ${label} attempt ${attempt + 1}/${maxAttempts} failed: ${lastError.message}. Retrying in ${delay}ms...`)
+          await sleep(delay)
+        }
+      }
+    }
+
+    console.error(`[Gemini] ${label} failed after ${maxAttempts} attempts: ${lastError?.message}`)
+    throw lastError || new GeminiError(`${label} failed after retries`, "GENERATION_FAILED")
   }
 
   private extractJSON(text: string): string | null {

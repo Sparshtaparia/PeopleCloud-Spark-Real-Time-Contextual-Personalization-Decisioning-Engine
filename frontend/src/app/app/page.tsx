@@ -2,10 +2,11 @@
 import { usePermissions } from '@/hooks/use-permissions'
 import { AccessDenied } from '@/components/rbac/AccessDenied'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useAppStore } from '@/lib/store'
-import { ArrowUpRight, Target, Activity, Zap, Users, BrainCircuit } from 'lucide-react'
+import { ArrowUpRight, Target, Activity, Zap, Users, BrainCircuit, Download, CheckSquare, FileSpreadsheet } from 'lucide-react'
 import { getDashboardMetrics } from '@/lib/actions/dashboard'
+import { exportAnalytics } from '@/lib/actions/analytics-export'
 
 // Format helpers
 const fmt = {
@@ -38,6 +39,26 @@ export default function CommandCenter() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('All Channels')
   const [data, setData] = useState<any>(null)
+  const [showExport, setShowExport] = useState(false)
+  const [exporting, setExporting] = useState(false)
+  const [exportSelections, setExportSelections] = useState({
+    commandCenter: true,
+    channelBreakdown: true,
+    campaignAnalytics: true,
+    creativeVariantAnalytics: false,
+    experimentBandits: false,
+    liveDecisions: true,
+    customerAnalytics: false,
+  })
+  const exportLabels: Record<string, string> = {
+    commandCenter: 'Command Center Summary',
+    channelBreakdown: 'Channel Breakdown',
+    campaignAnalytics: 'Campaign Analytics',
+    creativeVariantAnalytics: 'Creative Variant Analytics',
+    experimentBandits: 'Experiment / Bandit',
+    liveDecisions: 'Live Decisions',
+    customerAnalytics: 'Customer Analytics',
+  }
 
   useEffect(() => {
     if (currentOrg?.id && currentWorkspace?.id) {
@@ -54,49 +75,54 @@ export default function CommandCenter() {
     }
   }, [currentOrg?.id, currentWorkspace?.id, filter])
 
-  const exportCsv = () => {
-    if (!data) return
-    const csvData = [
-      ["--- COMMAND CENTER EXECUTIVE SUMMARY ---"],
-      ["Workspace", currentWorkspace?.name || "Unknown"],
-      ["Generated At", new Date().toISOString()],
-      [],
-      ["Metric", "Value"],
-      ["Active Profiles", data.activeProfiles],
-      ["Identity Match Rate", data.identityMatchRate + "%"],
-      ["Revenue Influenced", "$" + data.revenueInfluenced],
-      ["Active Campaigns", data.activeCampaigns],
-      ["Generated Creatives", data.generatedCreatives],
-      ["Model Latency (ms)", Number(data.modelLatency).toFixed(0)],
-      ["Model Drift", data.modelDrift],
-      ["Fatigue Alerts", data.fatigueAlerts],
-      [],
-      ["--- ACTIVE CAMPAIGNS ---"],
-      ["Campaign Name", "Objective", "Status", "Lift"],
-      ...(data.campaigns || []).map((c: any) => [
-        `"${c.name}"`,
-        c.objective,
-        c.status,
-        c.lift || "0%"
-      ]),
-      [],
-      ["--- RECENT BANDIT DECISIONS ---"],
-      ["Decision ID", "Action", "Segment", "Time"],
-      ...(data.decisions || []).map((d: any) => [
-        d.id,
-        `"${d.action}"`,
-        `"${d.segment}"`,
-        d.time
-      ])
-    ]
-    const csvContent = "data:text/csv;charset=utf-8," + csvData.map(e => e.join(",")).join("\n")
-    const encodedUri = encodeURI(csvContent)
-    const link = document.createElement("a")
-    link.setAttribute("href", encodedUri)
-    link.setAttribute("download", "peoplecloud-spark-command-center.csv")
+  const csvEscape = useCallback((val: string) => {
+    if (val.includes(',') || val.includes('"') || val.includes('\n')) {
+      return `"${val.replace(/"/g, '""')}"`
+    }
+    return val
+  }, [])
+
+  const downloadCsv = useCallback((rows: Record<string, string>[], headers: string[], filename: string) => {
+    const headerRow = headers.map(h => csvEscape(h)).join(',')
+    const dataRows = rows.map(row =>
+      headers.map(h => csvEscape(row[h] || '')).join(',')
+    )
+    const csv = [headerRow, ...dataRows].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = filename
     document.body.appendChild(link)
     link.click()
-  }
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }, [csvEscape])
+
+  const handleExport = useCallback(async () => {
+    if (!currentOrg?.id || !currentWorkspace?.id) return
+    setExporting(true)
+    try {
+      const payload = await exportAnalytics(currentOrg.id, currentWorkspace.id, filter)
+      const now = new Date()
+      const dateStr = now.toISOString().split('T')[0]
+      const orgSlug = currentOrg.name?.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase() || 'org'
+      const wsSlug = currentWorkspace.name?.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase() || 'workspace'
+      const ts = `${now.getFullYear() - 2000}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
+      const baseName = `peoplecloud-spark-${wsSlug}-${dateStr}-${ts}`
+
+      const selected = Object.entries(exportSelections).filter(([, v]) => v)
+      for (const [key] of selected) {
+        const section = payload[key as keyof typeof payload]
+        if (!section) continue
+        const sectionName = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+        downloadCsv(section.rows, section.headers, `${baseName}-${sectionName}.csv`)
+      }
+    } finally {
+      setExporting(false)
+      setShowExport(false)
+    }
+  }, [currentOrg?.id, currentWorkspace?.id, filter, exportSelections, downloadCsv])
 
   if (loading || !data) {
     return (
@@ -134,8 +160,8 @@ export default function CommandCenter() {
           </div>
         </div>
         <div className="flex gap-3">
-          <button onClick={exportCsv} className="px-6 py-3 bg-white border border-border-subtle rounded-full font-bold text-sm hover:border-deep-black transition-colors shadow-soft flex items-center gap-2">
-            <Activity size={18} /> Export
+          <button onClick={() => setShowExport(true)} className="px-6 py-3 bg-white border border-border-subtle rounded-full font-bold text-sm hover:border-deep-black transition-colors shadow-soft flex items-center gap-2">
+            <Download size={18} /> Export
           </button>
           <button className="px-6 py-3 bg-electric-mint text-deep-black rounded-full font-bold text-sm hover:bg-emerald-400 transition-colors shadow-glow-mint flex items-center gap-2">
             <Zap size={18} /> New Campaign
@@ -311,6 +337,59 @@ export default function CommandCenter() {
         </div>
 
       </div>
+
+      {/* Export Modal */}
+      {showExport && (
+        <>
+          <div className="fixed inset-0 bg-deep-black/20 backdrop-blur-sm z-[200]" onClick={() => !exporting && setShowExport(false)}></div>
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 z-[210] shadow-2xl w-full max-w-lg animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 mb-6">
+              <FileSpreadsheet size={24} className="text-electric-mint" />
+              <h3 className="font-display text-2xl font-bold">Analytics Export</h3>
+            </div>
+            <p className="text-text-secondary text-sm font-medium mb-6">
+              Select the reports to export as CSV files. Each report contains traceable data from the database.
+            </p>
+            <div className="space-y-3 mb-8">
+              {Object.entries(exportLabels).map(([key, label]) => (
+                <label key={key} className="flex items-center gap-3 cursor-pointer group">
+                  <div
+                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+                      exportSelections[key as keyof typeof exportSelections]
+                        ? 'bg-deep-black border-deep-black'
+                        : 'border-border-subtle group-hover:border-deep-black'
+                    }`}
+                    onClick={() => setExportSelections(prev => ({ ...prev, [key]: !prev[key as keyof typeof exportSelections] }))}
+                  >
+                    {exportSelections[key as keyof typeof exportSelections] && <CheckSquare size={14} className="text-white" />}
+                  </div>
+                  <span className="text-sm font-bold text-deep-black">{label}</span>
+                </label>
+              ))}
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowExport(false)}
+                disabled={exporting}
+                className="px-6 py-3 bg-white border border-border-subtle text-deep-black rounded-full font-bold hover:border-deep-black transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleExport}
+                disabled={exporting || !Object.values(exportSelections).some(v => v)}
+                className="px-6 py-3 bg-deep-black text-white rounded-full font-bold hover:bg-charcoal transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                {exporting ? (
+                  <>Exporting...</>
+                ) : (
+                  <><Download size={18} /> Download Selected</>
+                )}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

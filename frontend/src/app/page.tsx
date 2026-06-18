@@ -7,6 +7,7 @@ export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
   const [showDocsModal, setShowDocsModal] = useState(false)
+  const [showVideoModal, setShowVideoModal] = useState(false)
   
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -67,10 +68,10 @@ export default function LandingPage() {
                 Enter Demo Workspace
                 <ArrowRight size={24} />
               </Link>
-              <a href="#platform" className="w-full sm:w-auto px-10 py-5 bg-white hover:bg-warm-cream-dark transition-colors text-deep-black font-bold rounded-full text-lg flex items-center justify-center gap-3 shadow-soft border border-border-subtle hover:-translate-y-1">
+              <button onClick={() => setShowVideoModal(true)} className="w-full sm:w-auto px-10 py-5 bg-white hover:bg-warm-cream-dark transition-colors text-deep-black font-bold rounded-full text-lg flex items-center justify-center gap-3 shadow-soft border border-border-subtle hover:-translate-y-1">
                 <Play size={24} />
                 Watch Product Flow
-              </a>
+              </button>
             </div>
           </div>
 
@@ -598,6 +599,32 @@ export default function LandingPage() {
               <button onClick={() => setShowDocsModal(false)} className="px-6 py-3 font-bold text-white/50 hover:text-white">Close</button>
               <Link href="/login" className="px-6 py-3 bg-electric-mint text-deep-black rounded-xl font-bold">Login to Workspace</Link>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Product Flow Video Modal */}
+      {showVideoModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-deep-black/80 backdrop-blur-sm" onClick={() => setShowVideoModal(false)}>
+          <div className="relative animate-in fade-in zoom-in-95 duration-300" onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setShowVideoModal(false)}
+              className="absolute -top-14 right-0 text-white/60 hover:text-white font-bold text-sm flex items-center gap-2 z-10"
+            >
+              Close <span className="text-lg">✕</span>
+            </button>
+            <div className="relative overflow-hidden bg-black rounded-[24px] shadow-2xl border border-white/10 aspect-[9/16]"
+              style={{ width: 'min(65vw, 380px)' }}
+            >
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube-nocookie.com/embed/unaCc579IBo?autoplay=1&rel=0"
+                title="PeopleCloud Spark - Product Flow"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </div>
+            <p className="text-white/50 text-xs text-center mt-4">PeopleCloud Spark — AI Decisioning Engine</p>
           </div>
         </div>
       )}
