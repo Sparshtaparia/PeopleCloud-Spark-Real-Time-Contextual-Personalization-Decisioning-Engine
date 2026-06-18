@@ -197,7 +197,7 @@ export default function Campaigns() {
                 {c.status === 'review' && <>
                   <button disabled className="px-4 py-2 border border-border-subtle text-text-secondary rounded-lg text-xs font-bold opacity-50 cursor-not-allowed">Waiting for Approval</button>
                   <button onClick={() => handleStatusChange(c.id, 'draft')} disabled={!can('edit_campaign')} className="px-4 py-2 border border-coral-pink/30 text-coral-pink rounded-lg text-xs font-bold hover:bg-coral-pink/10 disabled:opacity-50">Reject</button>
-                  <button onClick={() => handleStatusChange(c.id, 'approved')} disabled={!can('approve_campaign')} className="px-4 py-2 bg-sky-cyan text-deep-black rounded-lg text-xs font-bold disabled:opacity-50">Approve</button>
+                  <button onClick={() => handleStatusChange(c.id, 'approved')} disabled={!can('approve_campaign')} className="px-4 py-2 bg-sky-cyan text-deep-black rounded-lg text-xs font-bold disabled:opacity-50 hover:brightness-110 hover:shadow-[0_0_20px_-5px_rgba(0,194,160,0.5)] hover:scale-105 transition-all">Approve</button>
                 </>}
 
                 {/* Approved → Launch */}
@@ -209,7 +209,7 @@ export default function Campaigns() {
                 {c.status === 'live' && <>
                   <button onClick={() => router.push(`/app/experiments`)} className="px-4 py-2 border border-border-subtle text-deep-black rounded-lg text-xs font-bold hover:border-deep-black"><Eye size={12} /> View Decisions</button>
                   <button onClick={() => handleStatusChange(c.id, 'paused')} disabled={!can('edit_campaign')} className="px-4 py-2 border border-border-subtle text-text-secondary rounded-lg text-xs font-bold hover:bg-border-subtle disabled:opacity-50"><PauseCircle size={12} /> Pause</button>
-                  <button onClick={() => handleEnableAiLearning(c.id)} disabled={!can('edit_campaign')} className="px-4 py-2 bg-butter-yellow text-deep-black rounded-lg text-xs font-bold disabled:opacity-50"><FlaskConical size={12} /> Enable AI Learning</button>
+                  <button onClick={() => handleEnableAiLearning(c.id)} disabled={!can('edit_campaign')} className="px-4 py-2 bg-butter-yellow text-deep-black rounded-lg text-xs font-bold disabled:opacity-50 hover:brightness-110 hover:shadow-[0_0_20px_-5px_rgba(255,215,0,0.5)] hover:scale-105 transition-all"><FlaskConical size={12} /> Enable AI Learning</button>
                 </>}
 
                 {/* Learning → Simulate Step / View Experiment / Declare Winner / Pause Learning */}
