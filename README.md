@@ -408,13 +408,9 @@ Implemented areas include:
 
 ## Screenshots
 
-Add screenshots here after deployment or local testing.
-
-```md
-![Dashboard Preview](./assets/dashboard.png)
-![Campaign Workspace](./assets/campaign-workspace.png)
-![Customer 360](./assets/customer-360.png)
-```
+![Dashboard Preview](frontend/assets/dashboard.png)
+![Campaign Workspace](frontend/assets/campaign-workspace.png)
+![Customer 360](frontend/assets/customer-360.png)
 
 ---
 
