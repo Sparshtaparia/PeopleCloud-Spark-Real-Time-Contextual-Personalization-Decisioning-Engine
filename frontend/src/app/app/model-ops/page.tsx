@@ -103,10 +103,10 @@ export default function MLOpsConsole() {
     <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
       
       {/* Black Cockpit Theme for MLOps */}
-      <div className="bg-charcoal text-white rounded-[40px] p-10 min-h-[800px] shadow-2xl relative overflow-hidden border border-border-inverse">
+      <div className="bg-charcoal text-white rounded-[32px] lg:rounded-[40px] p-6 lg:p-10 min-h-[500px] lg:min-h-[800px] shadow-2xl relative overflow-hidden border border-border-inverse">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-electric-mint/5 rounded-full blur-[120px]"></div>
 
-        <div className="flex justify-between items-end mb-12 relative z-10 border-b border-border-inverse pb-8">
+        <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 md:mb-12 relative z-10 border-b border-border-inverse pb-6 md:pb-8 gap-4">
           <div>
             <div className="flex items-center gap-3 text-text-inverse-secondary text-sm font-bold uppercase tracking-widest mb-3">
               <Terminal size={16} /> <span>Systems</span>

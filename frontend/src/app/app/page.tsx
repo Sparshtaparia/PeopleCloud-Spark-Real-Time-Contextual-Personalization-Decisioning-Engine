@@ -173,7 +173,7 @@ export default function CommandCenter() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
         
         {/* Massive Hero Metric Card */}
-        <div className="lg:col-span-8 glass-card rounded-[40px] p-10 flex flex-col justify-between relative overflow-hidden group border-0 bg-white shadow-soft">
+        <div className="lg:col-span-8 glass-card rounded-[32px] lg:rounded-[40px] p-6 lg:p-10 flex flex-col justify-between relative overflow-hidden group border-0 bg-white shadow-soft">
           <div className="absolute top-0 right-0 p-8">
             <div className="w-16 h-16 rounded-full bg-electric-mint/20 flex items-center justify-center text-electric-mint group-hover:scale-110 transition-transform duration-500">
               <ArrowUpRight size={32} strokeWidth={3} />
@@ -186,7 +186,7 @@ export default function CommandCenter() {
               Personalization Lift
             </p>
             <div className="flex items-baseline gap-4 mb-4">
-              <h2 className="font-display text-[120px] leading-[1] font-bold tracking-tighter text-deep-black">
+              <h2 className="font-display text-[48px] sm:text-[72px] lg:text-[120px] leading-[1] font-bold tracking-tighter text-deep-black">
                 {data.personalizationLift > 0 ? `+${data.personalizationLift}%` : 'N/A'}
               </h2>
             </div>
@@ -195,26 +195,24 @@ export default function CommandCenter() {
             </p>
           </div>
 
-          <div className="flex items-center gap-8 border-t border-border-subtle pt-8 mt-12">
+          <div className="grid grid-cols-3 gap-4 border-t border-border-subtle pt-6 lg:pt-8 mt-8 lg:mt-12">
             <div>
-              <p className="text-label-sm text-text-secondary uppercase mb-1">Revenue Influenced</p>
-              <p className="font-display text-title-lg font-bold">{fmt.currency(Number(data.revenueInfluenced))}</p>
+              <p className="text-[10px] lg:text-label-sm text-text-secondary uppercase mb-1">Revenue</p>
+              <p className="font-display text-base lg:text-title-lg font-bold">{fmt.currency(Number(data.revenueInfluenced))}</p>
             </div>
-            <div className="w-px h-12 bg-border-subtle"></div>
             <div>
-              <p className="text-label-sm text-text-secondary uppercase mb-1">Active Profiles</p>
-              <p className="font-display text-title-lg font-bold">{fmt.compact(data.activeProfiles)}</p>
+              <p className="text-[10px] lg:text-label-sm text-text-secondary uppercase mb-1">Profiles</p>
+              <p className="font-display text-base lg:text-title-lg font-bold">{fmt.compact(data.activeProfiles)}</p>
             </div>
-            <div className="w-px h-12 bg-border-subtle"></div>
             <div>
-              <p className="text-label-sm text-text-secondary uppercase mb-1">Identity Match</p>
-              <p className="font-display text-title-lg font-bold">{fmt.pct(data.identityMatchRate)}</p>
+              <p className="text-[10px] lg:text-label-sm text-text-secondary uppercase mb-1">Identity</p>
+              <p className="font-display text-base lg:text-title-lg font-bold">{fmt.pct(data.identityMatchRate)}</p>
             </div>
           </div>
         </div>
 
         {/* Deep Black AI Cockpit Card */}
-        <div className="lg:col-span-4 bg-charcoal rounded-[40px] p-10 text-text-inverse flex flex-col justify-between relative overflow-hidden shadow-2xl">
+        <div className="lg:col-span-4 bg-charcoal rounded-[32px] lg:rounded-[40px] p-6 lg:p-10 text-text-inverse flex flex-col justify-between relative overflow-hidden shadow-2xl">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-electric-mint/10 blur-[80px] rounded-full"></div>
           
           <div>
@@ -261,31 +259,29 @@ export default function CommandCenter() {
           
           {/* Creative Fatigue Alert */}
           {data.fatigueAlerts > 0 && (
-            <div className="bg-coral-pink rounded-[32px] p-8 flex items-center justify-between shadow-[0_20px_40px_-15px_rgba(255,107,115,0.4)] hover:-translate-y-1 transition-transform cursor-pointer">
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
-                  <Activity size={28} />
+            <div className="bg-coral-pink rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-[0_20px_40px_-15px_rgba(255,107,115,0.4)] hover:-translate-y-1 transition-transform cursor-pointer">
+              <div className="flex items-center gap-4 lg:gap-6 w-full lg:w-auto">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-white/20 rounded-full flex items-center justify-center text-white backdrop-blur-sm shrink-0">
+                  <Activity size={24} />
                 </div>
-                <div>
-                  <h3 className="font-display text-title-lg font-bold text-deep-black mb-1">Creative Fatigue Detected</h3>
-                  <p className="text-deep-black/80 font-medium">Segment "Premium Loyalists" showing -12% CTR drop in Email channel.</p>
+                <div className="min-w-0">
+                  <h3 className="font-display text-lg lg:text-title-lg font-bold text-deep-black mb-1">Creative Fatigue</h3>
+                  <p className="text-deep-black/80 font-medium text-sm">Segment "Premium Loyalists" showing -12% CTR drop.</p>
                 </div>
               </div>
-              <button className="px-6 py-3 bg-deep-black text-white rounded-full font-bold text-sm hover:scale-105 transition-transform">
-                Regenerate Variants
+              <button className="px-5 lg:px-6 py-2.5 lg:py-3 bg-deep-black text-white rounded-full font-bold text-xs lg:text-sm hover:scale-105 transition-transform shrink-0">
+                Regenerate
               </button>
             </div>
           )}
 
           {/* Chart Block */}
-          <div className="bg-white rounded-[32px] p-8 border-0 shadow-soft">
-             <div className="flex justify-between items-center mb-8">
-               <h3 className="font-display text-title-lg font-bold">Audience Growth</h3>
-               <div className="flex gap-2">
-                 <span className="w-3 h-3 rounded-full bg-electric-mint"></span>
-                 <span className="text-xs font-bold text-text-secondary uppercase">Resolved ({fmt.compact(data.audienceResolved || 0)})</span>
-                 <span className="w-3 h-3 rounded-full bg-border-subtle ml-4"></span>
-                 <span className="text-xs font-bold text-text-secondary uppercase">Anonymous ({fmt.compact(data.audienceAnonymous || 0)})</span>
+          <div className="bg-white rounded-[32px] p-6 lg:p-8 border-0 shadow-soft">
+             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+               <h3 className="font-display text-xl lg:text-title-lg font-bold">Audience Growth</h3>
+               <div className="flex gap-3 text-[10px] lg:text-xs">
+                 <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-electric-mint"></span> Resolved ({fmt.compact(data.audienceResolved || 0)})</span>
+                 <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-border-subtle"></span> Anonymous ({fmt.compact(data.audienceAnonymous || 0)})</span>
                </div>
              </div>
              <div className="h-[200px] flex items-end justify-between gap-2">
@@ -300,7 +296,7 @@ export default function CommandCenter() {
         </div>
 
         {/* Live Decision Feed */}
-        <div className="lg:col-span-4 bg-white rounded-[32px] p-8 shadow-soft flex flex-col border-0">
+        <div className="lg:col-span-4 bg-white rounded-[32px] p-6 lg:p-8 shadow-soft flex flex-col border-0">
           <div className="flex items-center justify-between mb-8">
             <h3 className="font-display text-title-lg font-bold flex items-center gap-3">
               Live Decisions

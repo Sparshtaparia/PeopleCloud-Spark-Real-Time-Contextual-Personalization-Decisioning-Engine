@@ -109,22 +109,23 @@ export default function DataSources() {
   return (
     <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
-      <div className="flex justify-between items-end mb-12">
+      <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 md:mb-12 gap-4">
         <div>
           <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">Data Intelligence Pipeline</h1>
           <p className="text-text-secondary font-medium">Connect and monitor all customer signal sources flowing into the Identity Graph.</p>
         </div>
-        <button onClick={() => setShowAddModal(true)} className="px-6 py-3 bg-deep-black text-white rounded-full font-bold shadow-2xl hover:scale-105 transition-transform flex items-center gap-2">
+        <button onClick={() => setShowAddModal(true)} className="px-6 py-3 bg-deep-black text-white rounded-full font-bold shadow-2xl hover:scale-105 transition-transform flex items-center gap-2 self-start md:self-auto">
           <Link2 size={18} /> Add Source
         </button>
       </div>
 
       {/* The Intelligence Pipeline Visual */}
-      <div className="bg-charcoal text-white rounded-[40px] p-10 mb-12 relative overflow-hidden shadow-2xl border border-border-inverse">
+      <div className="bg-charcoal text-white rounded-[32px] lg:rounded-[40px] p-6 lg:p-10 mb-8 lg:mb-12 relative overflow-hidden shadow-2xl border border-border-inverse">
         <div className="absolute top-0 right-0 w-96 h-96 bg-electric-mint/10 rounded-full blur-[100px] pointer-events-none"></div>
         <h3 className="font-display text-xl font-bold mb-10 flex items-center gap-3 relative z-10"><Server className="text-sky-cyan" /> Live Pipeline Architecture</h3>
         
-        <div className="flex justify-between items-center relative z-10 gap-4">
+        <div className="overflow-x-auto pb-4 -mx-10 px-10">
+        <div className="flex justify-between items-center relative z-10 gap-4 min-w-[700px]">
           {[
             { label: 'Data Sources', icon: Database, color: 'text-white' },
             { label: 'Ingestion Layer', icon: RefreshCw, color: 'text-white' },
@@ -149,9 +150,10 @@ export default function DataSources() {
             </React.Fragment>
           ))}
         </div>
+        </div>
       </div>
 
-      <h3 className="font-display text-2xl font-bold mb-6 text-deep-black">Connected Integrations</h3>
+      <h3 className="font-display text-xl lg:text-2xl font-bold mb-6 text-deep-black">Connected Integrations</h3>
       {loading ? (
         <div className="animate-pulse flex gap-6">
           <div className="h-[200px] w-1/4 bg-white rounded-3xl opacity-50"></div>

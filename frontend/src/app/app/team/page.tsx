@@ -70,8 +70,8 @@ export default function Team() {
       <div className="flex-1 flex gap-8 overflow-hidden pb-4">
         
         {/* Members List */}
-        <div className="flex-1 bg-white rounded-[40px] border border-border-subtle shadow-soft p-12 overflow-y-auto custom-scrollbar">
-          <div className="grid grid-cols-12 gap-4 mb-6 pb-4 border-b border-border-subtle">
+        <div className="flex-1 bg-white rounded-[32px] lg:rounded-[40px] border border-border-subtle shadow-soft p-6 lg:p-12 overflow-y-auto custom-scrollbar">
+          <div className="hidden md:grid grid-cols-12 gap-4 mb-6 pb-4 border-b border-border-subtle">
             <div className="col-span-4 text-[10px] uppercase font-bold tracking-widest text-text-secondary">Member</div>
             <div className="col-span-3 text-[10px] uppercase font-bold tracking-widest text-text-secondary">Role</div>
             <div className="col-span-3 text-[10px] uppercase font-bold tracking-widest text-text-secondary">Workspace Access</div>
@@ -88,8 +88,32 @@ export default function Team() {
             ) : members.map((m, i) => {
               const u = m.user || {}
               return (
-              <div key={m.id || i} className="grid grid-cols-12 gap-4 items-center p-4 hover:bg-warm-cream rounded-2xl transition-colors group">
-                <div className="col-span-4 flex items-center gap-4">
+              <div key={m.id || i} className="md:grid md:grid-cols-12 md:gap-4 md:items-center p-4 hover:bg-warm-cream rounded-2xl transition-colors group">
+                {/* Mobile: horizontal card */}
+                <div className="flex md:hidden items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-charcoal text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-soft">
+                    {u.name?.charAt(0) || u.email?.charAt(0) || 'U'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm text-deep-black truncate">{u.name}</p>
+                    <p className="text-xs font-medium text-text-secondary truncate">{u.email}</p>
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 shrink-0">Active</span>
+                </div>
+                <div className="flex md:hidden items-center gap-3 ml-[52px]">
+                  <span className="px-2 py-0.5 bg-white border border-border-subtle rounded text-[10px] font-bold text-deep-black uppercase">
+                    {m.role === 'owner' && <ShieldCheck size={10} className="text-electric-mint inline mr-1"/>}
+                    {m.role}
+                  </span>
+                  <span className="text-[10px] font-medium text-text-secondary">{m.workspaceAccess}</span>
+                  <div className="ml-auto flex items-center gap-2">
+                    <button className="text-text-secondary hover:text-deep-black transition-opacity">
+                      <MoreVertical size={14} />
+                    </button>
+                  </div>
+                </div>
+                {/* Desktop: grid row */}
+                <div className="col-span-4 hidden md:flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl bg-charcoal text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-soft">
                     {u.name?.charAt(0) || u.email?.charAt(0) || 'U'}
                   </div>
@@ -99,18 +123,18 @@ export default function Team() {
                   </div>
                 </div>
                 
-                <div className="col-span-3">
+                <div className="col-span-3 hidden md:block">
                   <span className="px-3 py-1 bg-white border border-border-subtle rounded-lg text-xs font-bold text-deep-black inline-flex items-center gap-1 shadow-soft uppercase">
                     {m.role === 'owner' && <ShieldCheck size={12} className="text-electric-mint"/>}
                     {m.role}
                   </span>
                 </div>
                 
-                <div className="col-span-3">
+                <div className="col-span-3 hidden md:block">
                   <span className="text-xs font-medium text-text-secondary bg-warm-cream px-2 py-1 rounded">{m.workspaceAccess}</span>
                 </div>
                 
-                <div className="col-span-2 flex items-center justify-end gap-4">
+                <div className="col-span-2 hidden md:flex items-center justify-end gap-4">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">
                     Active
                   </span>
@@ -125,7 +149,7 @@ export default function Team() {
 
         {/* Invite Form Slider */}
         {showInvite && (
-          <div className="w-[480px] bg-white rounded-[40px] border border-border-subtle shadow-2xl p-10 flex flex-col animate-in slide-in-from-right-16 duration-500 overflow-y-auto custom-scrollbar relative shrink-0">
+          <div className="w-full lg:w-[480px] bg-white rounded-[40px] border border-border-subtle shadow-2xl p-6 lg:p-10 flex flex-col animate-in slide-in-from-right-16 duration-500 overflow-y-auto custom-scrollbar relative shrink-0">
             <h2 className="font-display text-3xl font-bold mb-8">Invite to Organization</h2>
             
             <div className="space-y-6 flex-1">

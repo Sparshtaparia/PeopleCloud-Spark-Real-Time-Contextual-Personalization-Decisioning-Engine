@@ -68,8 +68,8 @@ export default function Customer360() {
 
       <div className="flex-1 flex gap-8 overflow-hidden pb-4">
         
-        {/* Left Col: Customer List */}
-        <div className="w-[340px] bg-white rounded-[32px] p-6 shadow-soft flex flex-col h-full border border-border-subtle shrink-0">
+        {/* Left Col: Customer List - hidden on mobile, toggled via mobile list button */}
+        <div className="hidden lg:flex w-[340px] bg-white rounded-[32px] p-6 shadow-soft flex-col h-full border border-border-subtle shrink-0">
           <div className="relative mb-6">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
             <input 
@@ -117,9 +117,30 @@ export default function Customer360() {
         {/* Center/Right Col: Profile Details */}
         <div className="flex-1 overflow-y-auto custom-scrollbar pr-4">
           
+          {/* Mobile: Customer List Toggle */}
+          <div className="lg:hidden mb-4">
+            <div className="bg-white rounded-2xl border border-border-subtle p-3 shadow-soft">
+              <div className="flex items-center gap-3 overflow-x-auto custom-scrollbar">
+                {customers.slice(0, 10).map((c) => (
+                  <button
+                    key={c.id}
+                    onClick={() => setSelectedCustomer(c)}
+                    className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
+                      selectedCustomer?.id === c.id
+                        ? 'bg-deep-black text-white'
+                        : 'bg-warm-cream text-text-secondary hover:bg-warm-cream-dark'
+                    }`}
+                  >
+                    {c.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Hero Profile Block */}
           {profile && (
-          <div className="bg-white rounded-[40px] p-10 mb-8 border border-border-subtle shadow-soft relative overflow-hidden">
+          <div className="bg-white rounded-[32px] lg:rounded-[40px] p-6 lg:p-10 mb-8 border border-border-subtle shadow-soft relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-sky-cyan text-deep-black px-6 py-2 rounded-bl-3xl font-bold text-sm tracking-wider flex items-center gap-2">
               <ShieldCheck size={16} /> Identity Resolved
             </div>
@@ -139,7 +160,7 @@ export default function Customer360() {
 
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h2 className="font-display text-5xl font-bold tracking-tight text-deep-black">{profile.name}</h2>
+                  <h2 className="font-display text-2xl lg:text-5xl font-bold tracking-tight text-deep-black">{profile.name}</h2>
                   <span className="px-3 py-1 rounded-full bg-butter-yellow text-deep-black text-xs font-bold uppercase tracking-wider">{profile.lifecycleStage || "Gold"} Member</span>
                 </div>
                 
@@ -181,7 +202,7 @@ export default function Customer360() {
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             
             {/* Affinity Map */}
-            <div className="bg-charcoal text-white rounded-[32px] p-8 shadow-2xl relative overflow-hidden">
+            <div className="bg-charcoal text-white rounded-[32px] p-6 lg:p-8 shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-sky-cyan/10 rounded-full blur-[40px]"></div>
               
               <div className="flex items-center justify-between mb-8 relative z-10">
@@ -211,13 +232,13 @@ export default function Customer360() {
             </div>
 
             {/* Next Best Action (AI Engine) */}
-            <div className="bg-electric-mint rounded-[32px] p-8 shadow-[0_20px_40px_-15px_rgba(24,214,139,0.3)] text-deep-black flex flex-col justify-between">
+            <div className="bg-electric-mint rounded-[32px] p-6 lg:p-8 shadow-[0_20px_40px_-15px_rgba(24,214,139,0.3)] text-deep-black flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-6">
                   <span className="px-3 py-1 bg-deep-black text-warm-cream text-[10px] font-bold uppercase tracking-widest rounded-full">AI Recommendation</span>
                   <span className="text-xs font-bold opacity-70">Next Best Action</span>
                 </div>
-                <h3 className="font-display text-4xl leading-tight font-bold tracking-tight mb-4">{profile.nextBestAction}</h3>
+                <h3 className="font-display text-2xl lg:text-4xl leading-tight font-bold tracking-tight mb-4">{profile.nextBestAction}</h3>
                 <p className="font-medium opacity-80 leading-relaxed max-w-md">
                   {profile.aiExplanation}
                 </p>

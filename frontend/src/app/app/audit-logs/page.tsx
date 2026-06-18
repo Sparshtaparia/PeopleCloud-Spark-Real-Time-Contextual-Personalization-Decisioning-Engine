@@ -119,9 +119,9 @@ function AuditLogs() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[40px] border border-border-subtle shadow-soft p-12">
+      <div className="bg-white rounded-[40px] border border-border-subtle shadow-soft p-4 lg:p-12">
         
-        <div className="flex gap-4 mb-10 pb-6 border-b border-border-subtle">
+        <div className="hidden lg:flex gap-4 mb-10 pb-6 border-b border-border-subtle">
           <div className="flex-1 text-[10px] uppercase font-bold tracking-widest text-text-secondary">Time</div>
           <div className="flex-[2] text-[10px] uppercase font-bold tracking-widest text-text-secondary">Actor</div>
           <div className="flex-[3] text-[10px] uppercase font-bold tracking-widest text-text-secondary">Action & Resource</div>
@@ -132,7 +132,7 @@ function AuditLogs() {
           {/* Vertical Timeline Line */}
           <div className="absolute left-[8px] top-4 bottom-4 w-px bg-border-subtle hidden md:block"></div>
 
-          <div className="space-y-10">
+          <div className="space-y-4 md:space-y-10">
             {loading ? (
               <div className="animate-pulse space-y-6">
                 {[1,2,3,4].map(i => <div key={i} className="h-12 bg-warm-cream rounded-xl"></div>)}
@@ -140,6 +140,44 @@ function AuditLogs() {
             ) : logs.length === 0 ? (
               <div className="text-center py-12 text-text-secondary">No audit logs found.</div>
             ) : logs.map((log, i) => {
+              const Icon = getIcon(log.action)
+              const color = getColor(log.severity)
+              return (
+              /* Mobile: card layout */
+              <div key={log.id || i} className="lg:hidden p-4 bg-warm-cream rounded-3xl border border-border-subtle space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-text-secondary">{formatDateTime(log.timestamp)}</span>
+                  <span className="text-[10px] font-mono font-medium text-text-secondary bg-white px-2 py-0.5 rounded">{log.ipAddress || 'Internal'}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 border border-border-subtle">
+                    <span className="font-bold text-xs text-deep-black">{log.actorName?.charAt(0) || 'S'}</span>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-bold text-sm text-deep-black truncate">{log.actorName || 'System'}</p>
+                    <p className="text-[10px] font-medium text-text-secondary uppercase">{log.actorRole?.replace('_', ' ') || 'SYSTEM'}</p>
+                  </div>
+                </div>
+                <div>
+                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold ${
+                    log.severity === 'Warning' ? 'bg-coral-pink/10 text-coral-pink border border-coral-pink/20' :
+                    log.severity === 'High' ? 'bg-deep-black text-warm-cream' :
+                    'bg-white border border-border-subtle text-deep-black'
+                  }`}>
+                    <Icon size={12} /> {log.action}
+                  </div>
+                  <p className="text-xs font-medium text-text-secondary mt-1">
+                    <span className="font-bold text-deep-black">{log.resourceType} {log.resourceId}</span>
+                  </p>
+                </div>
+              </div>
+              /* Desktop: flex row */
+              )})}
+          </div>
+          {/* Desktop rows rendered separately */}
+          <div className="hidden lg:block">
+            <div className="space-y-10">
+              {logs.map((log, i) => {
               const Icon = getIcon(log.action)
               const color = getColor(log.severity)
               return (
@@ -151,9 +189,7 @@ function AuditLogs() {
                   </span>
                 </div>
 
-                {/* Actor */}
                 <div className="flex-[2] flex items-center gap-4">
-                  {/* Timeline Dot */}
                   <div className="hidden md:flex absolute left-[-6px] w-4 h-4 rounded-full bg-warm-cream border-2 border-border-subtle items-center justify-center group-hover:border-deep-black transition-colors z-10">
                     <div className={`w-1.5 h-1.5 rounded-full ${color.replace('text-', 'bg-')}`}></div>
                   </div>
@@ -167,7 +203,6 @@ function AuditLogs() {
                   </div>
                 </div>
 
-                {/* Action */}
                 <div className="flex-[3]">
                   <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg mb-2 text-xs font-bold ${
                     log.severity === 'Warning' ? 'bg-coral-pink/10 text-coral-pink border border-coral-pink/20' :
@@ -181,13 +216,13 @@ function AuditLogs() {
                   </p>
                 </div>
 
-                {/* IP */}
                 <div className="flex-1 pt-2">
                   <span className="text-xs font-mono font-medium text-text-secondary bg-warm-cream px-2 py-1 rounded">{log.ipAddress || 'Internal'}</span>
                 </div>
 
               </div>
             )})}
+            </div>
           </div>
         </div>
 

@@ -117,9 +117,24 @@ export default function Settings() {
         )}
       </div>
 
-      <div className="flex-1 flex gap-8 overflow-hidden pb-4">
-        {/* Left Sidebar */}
-        <div className="w-[240px] bg-white rounded-[32px] border border-border-subtle p-4 flex flex-col gap-1 shrink-0 h-fit shadow-soft">
+      <div className="flex-1 flex flex-col md:flex-row gap-8 overflow-hidden pb-4">
+        {/* Mobile: Horizontal Tab Bar */}
+        <div className="flex md:hidden gap-1 overflow-x-auto custom-scrollbar pb-1 shrink-0">
+          {tabs.map(({ name, icon: Icon }) => (
+            <button
+              key={name}
+              onClick={() => setActiveTab(name)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                activeTab === name ? 'bg-deep-black text-white shadow-soft' : 'bg-white border border-border-subtle text-text-secondary'
+              }`}
+            >
+              <Icon size={14} />
+              {name}
+            </button>
+          ))}
+        </div>
+        {/* Desktop Sidebar */}
+        <div className="hidden md:flex w-[240px] bg-white rounded-[32px] border border-border-subtle p-4 flex-col gap-1 shrink-0 h-fit shadow-soft">
           {tabs.map(({ name, icon: Icon }) => (
             <button
               key={name}
@@ -135,7 +150,7 @@ export default function Settings() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 bg-white rounded-[40px] border border-border-subtle p-12 overflow-y-auto shadow-soft">
+        <div className="flex-1 bg-white rounded-[40px] border border-border-subtle p-4 lg:p-12 overflow-y-auto shadow-soft">
 
           {/* ── WORKSPACE ── */}
           {activeTab === 'Workspace' && (
@@ -150,7 +165,7 @@ export default function Settings() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest mb-3">Workspace Name</label>
                   <input readOnly value={currentWorkspace?.name || ''} className="w-full px-5 py-4 bg-warm-cream border border-border-subtle rounded-2xl font-bold text-text-primary outline-none" />
@@ -182,7 +197,7 @@ export default function Settings() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   { label: 'Model Serving', status: 'Active', color: 'electric-mint' },
                   { label: 'Event Ingestion', status: 'Active', color: 'electric-mint' },
@@ -222,7 +237,7 @@ export default function Settings() {
                     ))}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-widest mb-4">Banned Phrases</label>
                     <textarea rows={5} value={brandVoice.bannedPhrases}

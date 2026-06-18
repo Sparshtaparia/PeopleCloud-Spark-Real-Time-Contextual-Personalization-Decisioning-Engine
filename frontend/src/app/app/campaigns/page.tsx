@@ -126,7 +126,7 @@ export default function Campaigns() {
       <div className="flex-1 flex gap-8 overflow-hidden pb-4">
         
         {/* Campaign List */}
-        <div className={`flex flex-col transition-all duration-500 h-full ${showCreate ? 'w-[400px] shrink-0' : 'w-full'}`}>
+        <div className={`flex flex-col transition-all duration-500 h-full ${showCreate ? 'w-full lg:w-[400px] lg:shrink-0' : 'w-full'}`}>
           {!showCreate && (
             <div className="flex justify-between items-center mb-4 shrink-0 overflow-x-auto custom-scrollbar pb-2">
               <div className="flex gap-2">

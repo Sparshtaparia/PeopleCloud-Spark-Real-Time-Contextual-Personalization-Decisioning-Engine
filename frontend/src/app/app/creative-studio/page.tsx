@@ -120,7 +120,7 @@ export default function CreativeStudio() {
       <div className="flex-1 flex gap-8 overflow-hidden pb-4">
         
         {/* Left Col: Prompt Builder */}
-        <div className="w-[380px] bg-charcoal text-white rounded-[32px] p-8 shadow-2xl flex flex-col shrink-0 border border-border-inverse relative overflow-hidden">
+        <div className="w-full lg:w-[380px] bg-charcoal text-white rounded-[32px] p-8 shadow-2xl flex flex-col lg:shrink-0 border border-border-inverse relative overflow-hidden">
           <div className="absolute top-0 right-0 bg-butter-yellow text-deep-black px-4 py-1 rounded-bl-2xl text-[10px] font-bold uppercase tracking-widest">
             Prompt Builder
           </div>

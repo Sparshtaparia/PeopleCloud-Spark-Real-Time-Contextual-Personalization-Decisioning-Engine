@@ -56,26 +56,26 @@ export default function Segments() {
   return (
     <div className="px-4 lg:px-12 py-4 lg:py-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       
-      <div className="flex justify-between items-end mb-12">
+      <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 md:mb-12 gap-4">
         <div>
           <h1 className="font-display text-title-xl font-bold tracking-tight mb-2 text-text-primary">Audience Intelligence</h1>
           <p className="text-text-secondary font-medium">AI-generated customer clusters based on predictive LTV and intent scoring.</p>
         </div>
-        <div className="flex gap-4">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
+        <div className="flex gap-3 md:gap-4 w-full md:w-auto">
+          <div className="relative flex-1 md:flex-initial">
+            <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={16} />
             <input 
               type="text" 
               placeholder="Search segments..." 
-              className="pl-11 pr-4 py-3 bg-white border border-border-subtle rounded-full text-sm focus:outline-none focus:border-deep-black transition-colors font-bold w-64 shadow-soft"
+              className="pl-9 md:pl-11 pr-3 md:pr-4 py-2.5 md:py-3 bg-white border border-border-subtle rounded-full text-sm focus:outline-none focus:border-deep-black transition-colors font-bold w-full md:w-64 shadow-soft"
             />
           </div>
           <button 
             onClick={handleGenerate}
             disabled={generating}
-            className="px-6 py-3 bg-electric-mint text-deep-black rounded-full font-bold shadow-glow-mint hover:scale-105 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:hover:scale-100"
+            className="px-4 md:px-6 py-2.5 md:py-3 bg-electric-mint text-deep-black rounded-full font-bold shadow-glow-mint hover:scale-105 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:hover:scale-100 whitespace-nowrap"
           >
-            <Sparkles size={18} className={generating ? "animate-pulse" : ""} /> 
+            <Sparkles size={16} className={generating ? "animate-pulse" : ""} /> 
             {generating ? "Generating..." : "Generate Segment"}
           </button>
         </div>
@@ -94,7 +94,7 @@ export default function Segments() {
           const colors = ['bg-electric-mint', 'bg-butter-yellow', 'bg-sky-cyan', 'bg-charcoal', 'bg-white', 'bg-coral-pink']
           const color = colors[i % colors.length]
           return (
-          <div key={seg.id} onClick={() => setSelectedSegment(seg)} className={`rounded-[40px] p-8 border transition-all hover:-translate-y-1 cursor-pointer relative overflow-hidden group ${
+          <div key={seg.id} onClick={() => setSelectedSegment(seg)} className={`rounded-[32px] lg:rounded-[40px] p-6 lg:p-8 border transition-all hover:-translate-y-1 cursor-pointer relative overflow-hidden group ${
             color === 'bg-charcoal' ? 'bg-charcoal text-white border-border-inverse shadow-2xl' :
             color === 'bg-electric-mint' ? 'bg-electric-mint text-deep-black border-transparent shadow-[0_20px_40px_-15px_rgba(24,214,139,0.3)]' :
             'bg-white text-deep-black border-border-subtle shadow-soft'
