@@ -617,11 +617,18 @@ export default function LandingPage() {
               style={{ width: 'min(65vw, 380px)' }}
             >
               <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube-nocookie.com/embed/unaCc579IBo?autoplay=1&rel=0"
+                className="absolute pointer-events-auto"
+                src="https://www.youtube-nocookie.com/embed/unaCc579IBo?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3"
                 title="PeopleCloud Spark - Product Flow"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  width: 'calc(100% * 16/9)',
+                  height: 'calc(100% * 9/16)',
+                  transform: 'translate(-50%, -50%) rotate(-90deg)',
+                }}
               />
             </div>
             <p className="text-white/50 text-xs text-center mt-4">PeopleCloud Spark — AI Decisioning Engine</p>
