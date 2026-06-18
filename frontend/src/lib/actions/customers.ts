@@ -3,17 +3,25 @@
 import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
 import { getGeminiClient } from "@/lib/ai/gemini-client"
+import { getCached, setCache, cacheKey } from "@/lib/cache"
 
 export async function getCustomers(workspaceId: string) {
   const user = await requireAuth()
-  return await prisma.customer.findMany({
+  const cached = getCached(cacheKey("customers", workspaceId))
+  if (cached) return cached
+  const data = await prisma.customer.findMany({
     where: { workspaceId },
     orderBy: { createdAt: "desc" }
   })
+  setCache(cacheKey("customers", workspaceId), data, 1000 * 30)
+  return data
 }
 
 export async function getCustomerDetails(customerId: string) {
   const user = await requireAuth()
+  const cached = getCached(cacheKey("cust-det", customerId))
+  if (cached) return cached
+
   const customer = await prisma.customer.findUnique({
     where: { id: customerId }
   })
@@ -40,12 +48,14 @@ export async function getCustomerDetails(customerId: string) {
     } catch {}
   }
 
-  return {
+  const result = {
     ...customer,
     parsedAffinities: affinities,
     nextBestAction,
     aiExplanation
   }
+  setCache(cacheKey("cust-det", customerId), result, 1000 * 60 * 5)
+  return result
 }
 
 function getActionLabel(stage: string | null): string {

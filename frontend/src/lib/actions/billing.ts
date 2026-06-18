@@ -2,9 +2,12 @@
 
 import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
+import { getCached, setCache, cacheKey } from "@/lib/cache"
 
 export async function getUsage(organizationId: string) {
   const user = await requireAuth()
+  const cached = getCached(cacheKey("usage", organizationId))
+  if (cached) return cached
 
   // Validate user has access to org
   const membership = await prisma.membership.findUnique({
@@ -56,5 +59,6 @@ export async function getUsage(organizationId: string) {
   usageMap['events_ingested'] = eventsIngested
   usageMap['genai_creatives_generated'] = genaiCreatives
 
+  setCache(cacheKey("usage", organizationId), usageMap, 1000 * 60)
   return usageMap
 }

@@ -5,14 +5,19 @@ import { requirePermission } from "@/lib/rbac/require-permission"
 import { requireAuth, createAuditLog, incrementUsage } from "../server-utils"
 import { revalidatePath } from "next/cache"
 import { createNotification } from "./notifications"
+import { getCached, setCache, clearCache, cacheKey } from "@/lib/cache"
 
 export async function getCampaigns(workspaceId: string) {
   const user = await requireAuth()
-  return await prisma.campaign.findMany({
+  const cached = getCached(cacheKey("campaigns", workspaceId))
+  if (cached) return cached
+  const data = await prisma.campaign.findMany({
     where: { workspaceId },
     include: { segment: true },
     orderBy: { createdAt: 'desc' }
   })
+  setCache(cacheKey("campaigns", workspaceId), data, 1000 * 30)
+  return data
 }
 
 export async function createCampaign(formData: FormData) {
@@ -52,6 +57,7 @@ export async function createCampaign(formData: FormData) {
     severity: "Info"
   })
 
+  clearCache("campaigns")
   revalidatePath("/app/campaigns")
   return { success: true, campaignId: campaign.id }
 }
@@ -96,6 +102,7 @@ export async function launchCampaign(campaignId: string, organizationId: string,
     })
   })
 
+  clearCache("campaigns")
   revalidatePath("/app/campaigns")
   revalidatePath("/app")
   return { success: true }
@@ -194,6 +201,8 @@ export async function updateCampaignStatus(campaignId: string, status: string, o
     severity: ['live', 'completed'].includes(status) ? "High" : "Info"
   })
   
+  clearCache("campaigns")
+  clearCache("experiments")
   revalidatePath("/app/campaigns")
   revalidatePath("/app/experiments")
   revalidatePath("/app")
@@ -281,6 +290,8 @@ export async function enableAiLearning(campaignId: string, organizationId: strin
     type: "info",
   }).catch(() => {})
 
+  clearCache("campaigns")
+  clearCache("experiments")
   revalidatePath("/app/campaigns")
   revalidatePath("/app/experiments")
   revalidatePath("/app")

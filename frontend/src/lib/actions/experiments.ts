@@ -4,14 +4,19 @@ import { prisma } from "@/lib/prisma"
 import { requirePermission } from "@/lib/rbac/require-permission"
 import { requireAuth, createAuditLog, incrementUsage } from "../server-utils"
 import { revalidatePath } from "next/cache"
+import { getCached, setCache, clearCache, cacheKey } from "@/lib/cache"
 
 export async function getExperiments(workspaceId: string) {
   const user = await requireAuth()
-  return await prisma.experiment.findMany({
+  const cached = getCached(cacheKey("experiments", workspaceId))
+  if (cached) return cached
+  const data = await prisma.experiment.findMany({
     where: { workspaceId },
     include: { variants: true, campaign: { select: { name: true } } },
     orderBy: { createdAt: 'desc' }
   })
+  setCache(cacheKey("experiments", workspaceId), data, 1000 * 30)
+  return data
 }
 
 export async function simulateBanditStep(experimentId: string, organizationId: string, workspaceId: string, batchSize: number = 500) {
@@ -176,6 +181,8 @@ export async function simulateBanditStep(experimentId: string, organizationId: s
     metadata: { batchSize, ...stepResults }
   })
 
+  clearCache("experiments")
+  clearCache("campaigns")
   revalidatePath("/app/experiments")
   revalidatePath("/app/campaigns")
   revalidatePath("/app")
@@ -218,6 +225,8 @@ export async function declareWinner(experimentId: string, variantId: string, org
     })
   })
 
+  clearCache("experiments")
+  clearCache("campaigns")
   revalidatePath("/app/experiments")
   revalidatePath("/app/campaigns")
   return { success: true }
@@ -258,6 +267,8 @@ export async function pauseLearning(experimentId: string, organizationId: string
     })
   })
 
+  clearCache("experiments")
+  clearCache("campaigns")
   revalidatePath("/app/experiments")
   revalidatePath("/app/campaigns")
   return { success: true }

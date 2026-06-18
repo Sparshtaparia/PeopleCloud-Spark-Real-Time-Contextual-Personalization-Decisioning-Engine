@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
 import { createNotification } from "./notifications"
+import { getCached, setCache, clearCache, cacheKey } from "@/lib/cache"
 
 const SEGMENT_LIFECYCLE_MAP: Record<string, string[]> = {
   "High Intent Cart Abandoners": ["cart_abandoner"],
@@ -37,6 +38,8 @@ async function computeSegmentStats(workspaceId: string, lifecycleStages: string[
 
 export async function getSegments(workspaceId: string) {
   const user = await requireAuth()
+  const cached = getCached(cacheKey("segments", workspaceId))
+  if (cached) return cached
   const segments = await prisma.segment.findMany({
     where: { workspaceId },
     orderBy: { name: "asc" },
@@ -52,6 +55,7 @@ export async function getSegments(workspaceId: string) {
     return seg
   }))
 
+  setCache(cacheKey("segments", workspaceId), refreshed, 1000 * 30)
   return refreshed
 }
 
@@ -69,6 +73,7 @@ export async function refreshSegmentStats(workspaceId: string) {
     })
   }
 
+  clearCache("segments")
   return { success: true }
 }
 
@@ -109,5 +114,6 @@ export async function generateSegment(workspaceId: string, orgId: string) {
     type: "info",
   }).catch(() => {})
 
+  clearCache("segments")
   return segment
 }

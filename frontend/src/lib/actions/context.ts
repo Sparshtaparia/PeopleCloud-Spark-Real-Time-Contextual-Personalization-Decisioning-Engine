@@ -2,9 +2,12 @@
 
 import { prisma } from "@/lib/prisma"
 import { requireAuth } from "../server-utils"
+import { getCached, setCache, cacheKey } from "@/lib/cache"
 
 export async function getUserContext() {
   const sessionUser = await requireAuth()
+  const cached = getCached(cacheKey("ctx", sessionUser.id))
+  if (cached) return cached
 
   let dbUser = await prisma.user.findUnique({ where: { id: sessionUser.id } })
   if (!dbUser && sessionUser.email) {
@@ -51,7 +54,7 @@ export async function getUserContext() {
     ? workspaces.find(w => w.organizationId === defaultOrg.id) || null
     : null
 
-  return {
+  const result = {
     user: {
       id: dbUser.id,
       name: dbUser.name || "Unknown",
@@ -65,4 +68,6 @@ export async function getUserContext() {
     defaultOrg,
     defaultWorkspace,
   }
+  setCache(cacheKey("ctx", sessionUser.id), result, 1000 * 30)
+  return result
 }

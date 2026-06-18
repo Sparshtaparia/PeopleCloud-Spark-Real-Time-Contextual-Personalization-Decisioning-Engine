@@ -9,7 +9,8 @@ import {
   LayoutDashboard, Database, Users, PieChart, 
   Megaphone, Wand2, FlaskConical, Terminal, 
   ShieldCheck, UsersRound, CreditCard, Settings,
-  Bell, Search, ChevronDown, Check, Building2, Layers, MoreVertical, Trash2, Edit2, AlertTriangle, CheckCheck
+  Bell, Search, ChevronDown, Check, Building2, Layers, MoreVertical, Trash2, Edit2, AlertTriangle, CheckCheck,
+  Menu, X
 } from 'lucide-react'
 import { usePermissions } from '@/hooks/use-permissions'
 import { deleteOrganizationAction } from '@/lib/actions/organizations'
@@ -27,6 +28,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [showProfile, setShowProfile] = useState(false)
   const [showOrgMenu, setShowOrgMenu] = useState(false)
   const [showWsMenu, setShowWsMenu] = useState(false)
+  const [showMobileNav, setShowMobileNav] = useState(false)
   const [notifications, setNotifications] = useState<any[]>([])
   const [notifLoading, setNotifLoading] = useState(false)
   
@@ -50,7 +52,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       const wsId = params.get("wsId")
 
       if (orgId) {
-        const org = context.organizations.find(o => o.id === orgId)
+        const org = context.organizations.find((o: any) => o.id === orgId)
         if (org) {
           setCurrentOrg(org.id)
           localStorage.setItem('selectedOrgId', org.id)
@@ -62,12 +64,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       } else {
         const savedOrgId = localStorage.getItem('selectedOrgId')
         if (savedOrgId) {
-          const org = context.organizations.find(o => o.id === savedOrgId)
+          const org = context.organizations.find((o: any) => o.id === savedOrgId)
           if (org) {
             setCurrentOrg(org.id)
             const savedWsId = localStorage.getItem('selectedWsId')
             if (savedWsId) {
-              const ws = context.workspaces.find(w => w.id === savedWsId)
+              const ws = context.workspaces.find((w: any) => w.id === savedWsId)
               if (ws) setCurrentWorkspace(ws.id)
             }
           }
@@ -175,8 +177,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen w-full bg-warm-cream">
       
       {/* Mobile Hamburger */}
-      <button onClick={() => setShowSearch(true)} className="lg:hidden fixed top-5 left-4 z-50 w-10 h-10 bg-deep-black rounded-xl flex items-center justify-center text-white shadow-2xl">
-        <Search size={18} />
+      <button onClick={() => setShowMobileNav(true)} className="lg:hidden fixed top-4 left-3 z-50 w-9 h-9 bg-deep-black rounded-xl flex items-center justify-center text-white shadow-2xl">
+        <Menu size={16} />
       </button>
 
       {/* AppRail: Floating deep black vertical navigation */}
@@ -227,15 +229,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-coral-pink rounded-full border-2 border-charcoal"></span>
           </button>
           
-          <button onClick={() => setShowProfile(true)} className="block w-10 h-10 rounded-[12px] overflow-hidden border-2 border-white/20 hover:border-electric-mint transition-colors cursor-pointer group relative">
-            <img alt={user.name} className="w-full h-full object-cover bg-white" src={user.avatarUrl} />
+          <button onClick={() => setShowProfile(true)} className="w-10 h-10 rounded-[12px] overflow-hidden border-2 border-white/20 hover:border-electric-mint transition-colors cursor-pointer group relative">
+            <img alt="Epsilon" className="w-full h-full object-cover" src="/logo-profile-pic.png" />
             <div className="absolute left-14 bg-white text-deep-black text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-soft z-50">Profile</div>
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 ml-0 lg:ml-[88px] w-full min-h-screen flex flex-col relative">
+      <div className="flex-1 ml-0 lg:ml-[88px] w-full min-h-screen flex flex-col relative pb-16 lg:pb-0">
         
         {/* Topbar */}
         <header className="sticky top-0 z-40 bg-warm-cream/80 backdrop-blur-xl border-b border-border-subtle h-16 lg:h-20 flex justify-between items-center px-4 lg:px-12 w-full">
@@ -393,7 +395,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <p className="text-label-sm text-text-secondary uppercase">{user.role.replace('_', ' ')}</p>
               </div>
               <button onClick={() => setShowProfile(true)} className="lg:hidden w-8 h-8 rounded-lg overflow-hidden border-2 border-white/20">
-                <img alt={user.name} className="w-full h-full object-cover" src={user.avatarUrl} />
+                <img alt="Epsilon" className="w-full h-full object-cover" src="/logo-profile-pic.png" />
               </button>
             </div>
           </div>
@@ -404,6 +406,79 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+
+      {/* Mobile Navigation Overlay */}
+      {showMobileNav && (
+        <div className="fixed inset-0 z-[300] lg:hidden">
+          <div className="absolute inset-0 bg-deep-black/60 backdrop-blur-sm" onClick={() => setShowMobileNav(false)} />
+          <div className="relative w-72 h-full bg-deep-black text-white flex flex-col py-6 animate-in slide-in-from-left duration-300">
+            <div className="flex items-center justify-between px-5 mb-6">
+              <span className="font-display font-bold text-lg tracking-tighter">PeopleCloud <span className="inline-block px-2 py-0.5 bg-electric-mint rounded-[40px] -rotate-1 transform shadow-soft text-sm">Spark</span></span>
+              <button onClick={() => setShowMobileNav(false)} className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-white">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-1 px-3 mb-6">
+              {navItems.map((item) => {
+                const isActive = pathname === item.path
+                const Icon = item.icon
+                return (
+                  <NextLink
+                    key={item.path}
+                    href={item.path}
+                    onClick={() => setShowMobileNav(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                      isActive ? 'bg-electric-mint/20 text-electric-mint font-bold' : 'text-white/70 hover:text-white hover:bg-white/10 font-medium'
+                    }`}
+                  >
+                    <Icon size={18} />
+                    <span className="text-sm">{item.name}</span>
+                  </NextLink>
+                )
+              })}
+            </div>
+
+            <div className="mt-auto px-3 pt-4 border-t border-white/10 mx-3">
+              <div className="flex items-center gap-3 px-4 py-3">
+                <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0">
+                  <img alt="Epsilon" className="w-full h-full object-cover" src="/logo-profile-pic.png" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold truncate">{user.name}</p>
+                  <p className="text-xs text-white/50 truncate">{user.email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Bottom Nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-deep-black/95 backdrop-blur-xl border-t border-white/10 flex items-center justify-around py-1.5 safe-area-bottom">
+        {[
+          { icon: LayoutDashboard, path: routes.app, label: 'Home' },
+          { icon: Megaphone, path: routes.campaigns, label: 'Campaigns' },
+          { icon: Users, path: routes.customer360, label: '360' },
+          { icon: FlaskConical, path: routes.experiments, label: 'Experiments' },
+          { icon: Settings, path: routes.settings, label: 'More' },
+        ].map((item) => {
+          const isActive = pathname === item.path || (item.path !== routes.app && pathname.startsWith(item.path))
+          const Icon = item.icon
+          return (
+            <NextLink
+              key={item.path}
+              href={item.path}
+              className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-colors ${
+                isActive ? 'text-electric-mint' : 'text-white/50'
+              }`}
+            >
+              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+              <span className="text-[9px] font-bold uppercase tracking-wider">{item.label}</span>
+            </NextLink>
+          )
+        })}
+      </nav>
 
       {/* AI Loading Overlay */}
       {aiLoading && (
@@ -532,7 +607,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {showProfile && (
         <div className="fixed bottom-6 left-[104px] w-64 bg-deep-black text-white rounded-3xl shadow-2xl z-[100] border border-white/10 animate-in fade-in zoom-in-95 duration-200 overflow-hidden flex flex-col">
           <div className="p-4 border-b border-white/10 bg-white/5 flex items-center gap-3">
-            <img alt={user.name} className="w-10 h-10 rounded-xl object-cover border border-white/20" src={user.avatarUrl} />
+            <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/20">
+              <img alt="Epsilon" className="w-full h-full object-cover" src="/logo-profile-pic.png" />
+            </div>
             <div className="min-w-0">
               <p className="font-bold text-sm">{user.name}</p>
               <p className="text-xs text-white/50 truncate">{user.email}</p>

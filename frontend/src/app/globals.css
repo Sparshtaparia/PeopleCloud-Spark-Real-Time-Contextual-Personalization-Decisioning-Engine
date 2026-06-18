@@ -34,23 +34,23 @@
   --radius-3xl: 40px;
 
   /* Typographic Hierarchy mapped to Tailwind text- sizes */
-  --text-hero: 80px;
-  --text-hero--line-height: 88px;
+  --text-hero: clamp(2.25rem, 6vw, 5rem);
+  --text-hero--line-height: 1.1;
   --text-hero--letter-spacing: -0.04em;
   
-  --text-title-xl: 48px;
-  --text-title-xl--line-height: 56px;
+  --text-title-xl: clamp(1.5rem, 3.5vw, 3rem);
+  --text-title-xl--line-height: 1.2;
   --text-title-xl--letter-spacing: -0.02em;
   
-  --text-title-lg: 32px;
-  --text-title-lg--line-height: 40px;
+  --text-title-lg: clamp(1.25rem, 2.5vw, 2rem);
+  --text-title-lg--line-height: 1.3;
   
-  --text-metric-lg: 64px;
-  --text-metric-lg--line-height: 64px;
+  --text-metric-lg: clamp(2rem, 5vw, 4rem);
+  --text-metric-lg--line-height: 1.1;
   --text-metric-lg--letter-spacing: -0.02em;
   
-  --text-metric-md: 42px;
-  --text-metric-md--line-height: 48px;
+  --text-metric-md: clamp(1.5rem, 3.5vw, 2.625rem);
+  --text-metric-md--line-height: 1.2;
   
   --text-label-sm: 12px;
   --text-label-sm--line-height: 16px;

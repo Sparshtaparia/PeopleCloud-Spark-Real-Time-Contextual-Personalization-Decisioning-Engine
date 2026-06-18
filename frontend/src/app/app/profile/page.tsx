@@ -32,8 +32,8 @@ export default function Profile() {
           <div className="bg-charcoal rounded-[40px] p-10 text-white shadow-2xl relative overflow-hidden text-center flex flex-col items-center">
             <div className="absolute top-0 right-0 w-64 h-64 bg-sky-cyan/10 rounded-full blur-[60px] pointer-events-none"></div>
             
-            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 mb-6 relative z-10 bg-white">
-              <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
+            <div className="w-32 h-32 rounded-full border-4 border-white/20 mb-6 relative z-10 overflow-hidden shadow-2xl">
+              <img alt="Epsilon" className="w-full h-full object-cover" src="/logo-profile-pic.png" />
             </div>
             
             <h2 className="font-display text-3xl font-bold mb-2 relative z-10">{user.name}</h2>
